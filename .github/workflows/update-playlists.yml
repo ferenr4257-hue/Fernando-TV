@@ -30,7 +30,7 @@ jobs:
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/southam.m3u -o Americas/south-america.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/eur.m3u -o Europe/europe.m3u
 
-          # Central America - separate country playlists only
+          # Central America - separate country source playlists
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/bz.m3u -o Countries/Central-America/belize.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/cr.m3u -o Countries/Central-America/costa-rica.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/sv.m3u -o Countries/Central-America/el-salvador.m3u
@@ -39,15 +39,48 @@ jobs:
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/ni.m3u -o Countries/Central-America/nicaragua.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/pa.m3u -o Countries/Central-America/panama.m3u
 
-          # Remove obsolete combined/duplicate Central America files
+          # Remove obsolete combined/duplicate files
           rm -f Americas/central-america.m3u
           rm -f Countries/costa-rica.m3u
+
+          # Build one Hot Player master playlist, grouped by country
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          countries = [
+              ('Belize', 'belize.m3u'),
+              ('Costa Rica', 'costa-rica.m3u'),
+              ('El Salvador', 'el-salvador.m3u'),
+              ('Guatemala', 'guatemala.m3u'),
+              ('Honduras', 'honduras.m3u'),
+              ('Nicaragua', 'nicaragua.m3u'),
+              ('Panama', 'panama.m3u'),
+          ]
+
+          output = ['#EXTM3U']
+          base = Path('Countries/Central-America')
+          for country, filename in countries:
+              lines = (base / filename).read_text(encoding='utf-8').splitlines()
+              for line in lines:
+                  if line.startswith('#EXTINF:'):
+                      if 'group-title=' in line:
+                          line = re.sub(r'group-title="[^"]*"', f'group-title="{country}"', line)
+                      else:
+                          comma = line.find(',')
+                          if comma != -1:
+                              line = line[:comma] + f' group-title="{country}"' + line[comma:]
+                  if line and line != '#EXTM3U':
+                      output.append(line)
+
+          Path('fernando-tv.m3u').write_text('\n'.join(output) + '\n', encoding='utf-8')
+          PY
 
       - name: Commit playlist updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A Americas Europe Countries
+          git add -A Americas Europe Countries fernando-tv.m3u
           if git diff --cached --quiet; then
             echo "No playlist changes"
           else
