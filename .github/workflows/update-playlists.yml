@@ -37,7 +37,6 @@ jobs:
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/ni.m3u -o Countries/Central-America/nicaragua.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/pa.m3u -o Countries/Central-America/panama.m3u
 
-          # Metadata lets us convert regional playlist entries into country groups.
           curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
           curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
 
@@ -85,6 +84,7 @@ jobs:
           countries = json.loads(Path('/tmp/countries.json').read_text(encoding='utf-8'))
           country_names = {c.get('code'): c.get('name', c.get('code')) for c in countries}
           channel_country = {c.get('id'): c.get('country') for c in channels if c.get('id')}
+          channel_categories = {c.get('id'): c.get('categories') or [] for c in channels if c.get('id')}
           central_codes = {'BZ', 'CR', 'SV', 'GT', 'HN', 'NI', 'PA'}
 
           def set_group(line, group):
@@ -99,10 +99,19 @@ jobs:
               m = re.search(r'tvg-id="([^"]+)"', line)
               return m.group(1) if m else None
 
+          def category_for(channel_id, original_line):
+              categories = channel_categories.get(channel_id) or []
+              if categories:
+                  return ' / '.join(str(x).replace('_', ' ').title() for x in categories)
+              m = re.search(r'group-title="([^"]*)"', original_line)
+              if m and m.group(1).strip():
+                  return m.group(1).strip()
+              return 'Other'
+
           output = ['#EXTM3U']
           seen = set()
 
-          # Central America remains grouped exactly as before.
+          # Central America stays grouped by country.
           for country, filename in central_countries:
               lines = (base / filename).read_text(encoding='utf-8').splitlines()
               current_extinf = None
@@ -123,13 +132,12 @@ jobs:
                       current_extinf = None
                       extras = []
 
-          # Add North America, South America and Europe, grouped by country.
           regional_files = [
-              Path('Americas/north-america.m3u'),
-              Path('Americas/south-america.m3u'),
-              Path('Europe/europe.m3u'),
+              (Path('Americas/north-america.m3u'), True),
+              (Path('Americas/south-america.m3u'), False),
+              (Path('Europe/europe.m3u'), False),
           ]
-          for path in regional_files:
+          for path, country_and_category in regional_files:
               lines = path.read_text(encoding='utf-8').splitlines()
               current_extinf = None
               extras = []
@@ -142,7 +150,12 @@ jobs:
                           current_extinf = None
                           extras = []
                           continue
-                      group = country_names.get(code, code or 'Other')
+                      country = country_names.get(code, code or 'Other')
+                      if country_and_category:
+                          category = category_for(channel_id, line)
+                          group = f'{country} - {category}'
+                      else:
+                          group = country
                       current_extinf = set_group(line, group)
                       extras = []
                   elif line.startswith('#') and current_extinf:
