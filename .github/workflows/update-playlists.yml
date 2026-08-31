@@ -37,14 +37,19 @@ jobs:
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/ni.m3u -o Countries/Central-America/nicaragua.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/pa.m3u -o Countries/Central-America/panama.m3u
 
+          # Metadata lets us convert regional playlist entries into country groups.
+          curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
+          curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
+
           rm -f Americas/central-america.m3u
           rm -f Countries/costa-rica.m3u
 
           python3 - <<'PY'
+          import json
           import re
           from pathlib import Path
 
-          countries = [
+          central_countries = [
               ('Belize', 'belize.m3u'),
               ('Costa Rica', 'costa-rica.m3u'),
               ('El Salvador', 'el-salvador.m3u'),
@@ -54,8 +59,6 @@ jobs:
               ('Panama', 'panama.m3u'),
           ]
 
-          # Additional publicly available Costa Rica streams that we want to
-          # preserve even when the upstream country playlist changes.
           costa_rica_additions = [
               ('TicaVision.cr', 'https://i.imgur.com/mev90pC.jpg', 'TicaVisión',
                'https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
@@ -78,21 +81,84 @@ jobs:
           if additions:
               cr_path.write_text(cr_text.rstrip() + '\n' + '\n'.join(additions) + '\n', encoding='utf-8')
 
+          channels = json.loads(Path('/tmp/channels.json').read_text(encoding='utf-8'))
+          countries = json.loads(Path('/tmp/countries.json').read_text(encoding='utf-8'))
+          country_names = {c.get('code'): c.get('name', c.get('code')) for c in countries}
+          channel_country = {c.get('id'): c.get('country') for c in channels if c.get('id')}
+          central_codes = {'BZ', 'CR', 'SV', 'GT', 'HN', 'NI', 'PA'}
+
+          def set_group(line, group):
+              if 'group-title=' in line:
+                  return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', line)
+              comma = line.find(',')
+              if comma != -1:
+                  return line[:comma] + f' group-title="{group}"' + line[comma:]
+              return line
+
+          def tvg_id_from(line):
+              m = re.search(r'tvg-id="([^"]+)"', line)
+              return m.group(1) if m else None
+
           output = ['#EXTM3U']
-          for country, filename in countries:
+          seen = set()
+
+          # Central America remains grouped exactly as before.
+          for country, filename in central_countries:
               lines = (base / filename).read_text(encoding='utf-8').splitlines()
+              current_extinf = None
+              extras = []
               for line in lines:
                   if line.startswith('#EXTINF:'):
-                      if 'group-title=' in line:
-                          line = re.sub(r'group-title="[^"]*"', f'group-title="{country}"', line)
-                      else:
-                          comma = line.find(',')
-                          if comma != -1:
-                              line = line[:comma] + f' group-title="{country}"' + line[comma:]
-                  if line and line != '#EXTM3U':
-                      output.append(line)
+                      current_extinf = set_group(line, country)
+                      extras = []
+                  elif line.startswith('#') and current_extinf:
+                      extras.append(line)
+                  elif line and line != '#EXTM3U' and current_extinf:
+                      key = (tvg_id_from(current_extinf) or current_extinf, line)
+                      if key not in seen:
+                          output.append(current_extinf)
+                          output.extend(extras)
+                          output.append(line)
+                          seen.add(key)
+                      current_extinf = None
+                      extras = []
+
+          # Add North America, South America and Europe, grouped by country.
+          regional_files = [
+              Path('Americas/north-america.m3u'),
+              Path('Americas/south-america.m3u'),
+              Path('Europe/europe.m3u'),
+          ]
+          for path in regional_files:
+              lines = path.read_text(encoding='utf-8').splitlines()
+              current_extinf = None
+              extras = []
+              for line in lines:
+                  if line.startswith('#EXTINF:'):
+                      tvg_id = tvg_id_from(line)
+                      channel_id = tvg_id.split('@', 1)[0] if tvg_id else None
+                      code = channel_country.get(channel_id)
+                      if code in central_codes:
+                          current_extinf = None
+                          extras = []
+                          continue
+                      group = country_names.get(code, code or 'Other')
+                      current_extinf = set_group(line, group)
+                      extras = []
+                  elif line.startswith('#') and current_extinf:
+                      extras.append(line)
+                  elif line and line != '#EXTM3U' and current_extinf:
+                      key = (tvg_id_from(current_extinf) or current_extinf, line)
+                      if key not in seen:
+                          output.append(current_extinf)
+                          output.extend(extras)
+                          output.append(line)
+                          seen.add(key)
+                      current_extinf = None
+                      extras = []
 
           Path('fernando-tv.m3u').write_text('\n'.join(output) + '\n', encoding='utf-8')
+          print(f'Built master playlist with {len(seen)} unique streams')
           PY
 
       - name: Commit playlist updates
