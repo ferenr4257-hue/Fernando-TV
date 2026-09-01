@@ -58,11 +58,21 @@ jobs:
               ('Panama', 'panama.m3u'),
           ]
 
+          # Curated public alternatives. These are added as separate entries so the
+          # upstream IPTV-org entries remain available for comparison in Hot Player.
           costa_rica_additions = [
-              ('TicaVision.cr', 'https://i.imgur.com/mev90pC.jpg', 'TicaVisión',
+              ('TicaVision.cr', 'https://i.imgur.com/mev90pC.jpg', 'TicaVisión - Alternative',
                'https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
-              ('Trivision36.cr', '', 'Trivisión 36',
+              ('Trivision36.cr', '', 'Trivisión 36 - Alternative',
                'https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403'),
+              ('Teletica.cr', '', 'Teletica 7 - Alternative',
+               'https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8'),
+              ('Canal4.cr', '', 'Repretel Canal 4 - Alternative',
+               'https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8'),
+              ('Canal6.cr', '', 'Repretel Canal 6 - Alternative',
+               'https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8'),
+              ('Canal11.cr', '', 'Repretel Canal 11 - Alternative',
+               'https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8'),
           ]
 
           base = Path('Countries/Central-America')
@@ -71,7 +81,9 @@ jobs:
           existing_names = cr_text.lower()
           additions = []
           for tvg_id, logo, name, url in costa_rica_additions:
-              if name.lower() not in existing_names and tvg_id.lower() not in existing_names:
+              # Match the exact alternative display name, not the base tvg-id, so an
+              # alternative can coexist with the normal upstream channel.
+              if name.lower() not in existing_names:
                   logo_attr = f' tvg-logo="{logo}"' if logo else ''
                   additions.extend([
                       f'#EXTINF:-1 tvg-id="{tvg_id}"{logo_attr} group-title="General",{name}',
