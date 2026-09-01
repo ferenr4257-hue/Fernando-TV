@@ -2417,7 +2417,7 @@ http://177.234.249.178:8888/GOLTV/index.m3u8
 https://2-fss-2.streamhoster.com/pl_118/201450-1248872-1/playlist.m3u8
 #EXTINF:-1 tvg-id="GordonRamsaysHellsKitchen.us@SD" tvg-logo="https://i.imgur.com/WgN4T18.png" group-title="United States - Cooking",Gordon Ramsay (720p)
 https://aegis-cloudfront-1.tubi.video/c8364f36-c60b-4a39-8d86-0b92db4611c0/index.m3u8
-#EXTINF:-1 tvg-id="GBNTV.us@SD" tvg-logo="https://i.imgur.com/DsFyyHy.png" group-title="United States - Religious",Gospel Broadcasting Network (GBN) (1080p)
+#EXTINF:-1 tvg-id="GBNTV.us@SD" tvg-logo="https://i.imgur.com/DsFyyHy.png" group-title="Other - Religious",Gospel Broadcasting Network (GBN) (1080p)
 https://cdn3.wowza.com/5/Ny9jK1A1Q3h4N1VZ/live/myStream/playlist.m3u8
 #EXTINF:-1 tvg-id="GospelTruthTV.us@SD" tvg-logo="https://i.imgur.com/LI52X2q.png" group-title="United States - Religious",Gospel Truth TV (1080p)
 https://na.linear.zype.com/bf94f9f4-383c-40e0-9d49-279a4f33ab8d/f29b8836-d990-4c8d-b421-192a8f43edc4-zype/manifest.m3u8
