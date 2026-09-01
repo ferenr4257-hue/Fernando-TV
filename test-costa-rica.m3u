@@ -1,0 +1,13 @@
+#EXTM3U
+#EXTINF:-1 group-title="Costa Rica Test",TicaVision
+https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8
+#EXTINF:-1 group-title="Costa Rica Test",Trivision 36
+https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403
+#EXTINF:-1 group-title="Costa Rica Test",Teletica 7 Alternative
+https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8
+#EXTINF:-1 group-title="Costa Rica Test",Repretel 4 Alternative
+https://d3bgcstab9qhd7.cloudfront.net/hls/canal4.m3u8
+#EXTINF:-1 group-title="Costa Rica Test",Repretel 6 Alternative
+https://d3bgcstab9qhd7.cloudfront.net/hls/canal6.m3u8
+#EXTINF:-1 group-title="Costa Rica Test",Repretel 11 Alternative
+https://d3bgcstab9qhd7.cloudfront.net/hls/canal11.m3u8
