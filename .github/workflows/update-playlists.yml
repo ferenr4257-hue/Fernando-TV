@@ -22,7 +22,7 @@ jobs:
       - name: Download public playlists
         run: |
           set -e
-          mkdir -p Americas Europe Countries/Central-America
+          mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked
 
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/noram.m3u -o Americas/north-america.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/carib.m3u -o Americas/caribbean.m3u
@@ -36,6 +36,10 @@ jobs:
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/hn.m3u -o Countries/Central-America/honduras.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/ni.m3u -o Countries/Central-America/nicaragua.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/pa.m3u -o Countries/Central-America/panama.m3u
+
+          # Secondary free/ungeoblocked source for USA and Spain.
+          curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/US.m3u -o Sources/Ungeoblocked/US.m3u
+          curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/ES.m3u -o Sources/Ungeoblocked/ES.m3u
 
           curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
           curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
@@ -58,8 +62,6 @@ jobs:
               ('Panama', 'panama.m3u'),
           ]
 
-          # Curated public alternatives. These are added as separate entries so the
-          # upstream IPTV-org entries remain available for comparison in Hot Player.
           costa_rica_additions = [
               ('TicaVision.cr', 'https://i.imgur.com/mev90pC.jpg', 'TicaVisión - Alternative',
                'https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
@@ -81,8 +83,6 @@ jobs:
           existing_names = cr_text.lower()
           additions = []
           for tvg_id, logo, name, url in costa_rica_additions:
-              # Match the exact alternative display name, not the base tvg-id, so an
-              # alternative can coexist with the normal upstream channel.
               if name.lower() not in existing_names:
                   logo_attr = f' tvg-logo="{logo}"' if logo else ''
                   additions.extend([
@@ -122,6 +122,20 @@ jobs:
 
           output = ['#EXTM3U']
           seen = set()
+          seen_ids = set()
+
+          def add_entry(extinf, extras, url):
+              key = (tvg_id_from(extinf) or extinf, url)
+              if key in seen:
+                  return False
+              output.append(extinf)
+              output.extend(extras)
+              output.append(url)
+              seen.add(key)
+              cid = tvg_id_from(extinf)
+              if cid:
+                  seen_ids.add(cid.split('@', 1)[0])
+              return True
 
           # Central America stays grouped by country.
           for country, filename in central_countries:
@@ -135,12 +149,7 @@ jobs:
                   elif line.startswith('#') and current_extinf:
                       extras.append(line)
                   elif line and line != '#EXTM3U' and current_extinf:
-                      key = (tvg_id_from(current_extinf) or current_extinf, line)
-                      if key not in seen:
-                          output.append(current_extinf)
-                          output.extend(extras)
-                          output.append(line)
-                          seen.add(key)
+                      add_entry(current_extinf, extras, line)
                       current_extinf = None
                       extras = []
 
@@ -173,12 +182,36 @@ jobs:
                   elif line.startswith('#') and current_extinf:
                       extras.append(line)
                   elif line and line != '#EXTM3U' and current_extinf:
-                      key = (tvg_id_from(current_extinf) or current_extinf, line)
-                      if key not in seen:
-                          output.append(current_extinf)
-                          output.extend(extras)
-                          output.append(line)
-                          seen.add(key)
+                      add_entry(current_extinf, extras, line)
+                      current_extinf = None
+                      extras = []
+
+          # Add USA + Spain secondary streams only when that channel ID is not already
+          # represented in the primary build. This avoids cluttering the master list.
+          secondary_files = [
+              (Path('Sources/Ungeoblocked/US.m3u'), 'United States'),
+              (Path('Sources/Ungeoblocked/ES.m3u'), 'Spain'),
+          ]
+          for path, country in secondary_files:
+              lines = path.read_text(encoding='utf-8').splitlines()
+              current_extinf = None
+              extras = []
+              for line in lines:
+                  if line.startswith('#EXTINF:'):
+                      cid = tvg_id_from(line)
+                      base_id = cid.split('@', 1)[0] if cid else None
+                      if base_id and base_id in seen_ids:
+                          current_extinf = None
+                          extras = []
+                          continue
+                      category = category_for(base_id, line) if country == 'United States' else 'Ungeoblocked'
+                      group = f'{country} - {category}' if country == 'United States' else f'{country} - Ungeoblocked'
+                      current_extinf = set_group(line, group)
+                      extras = []
+                  elif line.startswith('#') and current_extinf:
+                      extras.append(line)
+                  elif line and line != '#EXTM3U' and current_extinf:
+                      add_entry(current_extinf, extras, line)
                       current_extinf = None
                       extras = []
 
@@ -190,7 +223,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A Americas Europe Countries fernando-tv.m3u
+          git add -A Americas Europe Countries Sources fernando-tv.m3u
           if git diff --cached --quiet; then
             echo "No playlist changes"
           else
