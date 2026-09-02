@@ -137,15 +137,21 @@ https://cloudvideo.servers10.com:8081/8198/index.m3u8
 https://acceso.radiosportstv.online:3022/stream/play.m3u8
 #EXTINF:-1 tvg-id="ZurquiTV.cr@SD" tvg-logo="https://i.imgur.com/XvktUBB.jpg" group-title="General",Zurquí TV (720p)
 https://videoserver.tmcreativos.com:19360/gesfnvpamn/gesfnvpamn.m3u8
-#EXTINF:-1 tvg-id="TicaVision.cr" tvg-logo="https://i.imgur.com/mev90pC.jpg" group-title="General",TicaVisión - Alternative
+
+#EXTINF:-1 tvg-id="TicaVision.cr" group-title="General",TicaVisión - Alternative
 https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8
+
 #EXTINF:-1 tvg-id="Trivision36.cr" group-title="General",Trivisión 36 - Alternative
 https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403
+
 #EXTINF:-1 tvg-id="Teletica.cr" group-title="General",Teletica 7 - Alternative
 https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8
+
 #EXTINF:-1 tvg-id="Canal4.cr" group-title="General",Repretel Canal 4 - Alternative
 https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8
+
 #EXTINF:-1 tvg-id="Canal6.cr" group-title="General",Repretel Canal 6 - Alternative
 https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8
+
 #EXTINF:-1 tvg-id="Canal11.cr" group-title="General",Repretel Canal 11 - Alternative
 https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8
