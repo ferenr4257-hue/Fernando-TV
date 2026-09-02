@@ -19,16 +19,21 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Download public playlists
+      - name: Download and build public playlists
         run: |
           set -e
           mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked
 
-          curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/noram.m3u -o Americas/north-america.m3u
-          curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/carib.m3u -o Americas/caribbean.m3u
+          # North America: only USA and Mexico. Canada intentionally excluded.
+          curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/us.m3u -o Americas/usa.m3u
+          curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/mx.m3u -o Americas/mexico.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/southam.m3u -o Americas/south-america.m3u
-          curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/eur.m3u -o Europe/europe.m3u
 
+          # Europe: only Spain and Italy.
+          curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/es.m3u -o Europe/spain.m3u
+          curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/it.m3u -o Europe/italy.m3u
+
+          # Central America stays country-by-country.
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/bz.m3u -o Countries/Central-America/belize.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/cr.m3u -o Countries/Central-America/costa-rica.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/sv.m3u -o Countries/Central-America/el-salvador.m3u
@@ -37,185 +42,131 @@ jobs:
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/ni.m3u -o Countries/Central-America/nicaragua.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/pa.m3u -o Countries/Central-America/panama.m3u
 
-          # Secondary free/ungeoblocked source for USA and Spain.
+          # Secondary free/ungeoblocked lists for USA and Spain.
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/US.m3u -o Sources/Ungeoblocked/US.m3u
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/ES.m3u -o Sources/Ungeoblocked/ES.m3u
 
           curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
           curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
 
-          rm -f Americas/central-america.m3u
-          rm -f Countries/costa-rica.m3u
+          # Remove obsolete broad regional files so they do not clutter the repo.
+          rm -f Americas/north-america.m3u Americas/caribbean.m3u Americas/central-america.m3u Europe/europe.m3u Countries/costa-rica.m3u
 
           python3 - <<'PY'
-          import json
-          import re
+          import json, re
           from pathlib import Path
-
-          central_countries = [
-              ('Belize', 'belize.m3u'),
-              ('Costa Rica', 'costa-rica.m3u'),
-              ('El Salvador', 'el-salvador.m3u'),
-              ('Guatemala', 'guatemala.m3u'),
-              ('Honduras', 'honduras.m3u'),
-              ('Nicaragua', 'nicaragua.m3u'),
-              ('Panama', 'panama.m3u'),
-          ]
-
-          costa_rica_additions = [
-              ('TicaVision.cr', 'https://i.imgur.com/mev90pC.jpg', 'TicaVisión - Alternative',
-               'https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
-              ('Trivision36.cr', '', 'Trivisión 36 - Alternative',
-               'https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403'),
-              ('Teletica.cr', '', 'Teletica 7 - Alternative',
-               'https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8'),
-              ('Canal4.cr', '', 'Repretel Canal 4 - Alternative',
-               'https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8'),
-              ('Canal6.cr', '', 'Repretel Canal 6 - Alternative',
-               'https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8'),
-              ('Canal11.cr', '', 'Repretel Canal 11 - Alternative',
-               'https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8'),
-          ]
-
-          base = Path('Countries/Central-America')
-          cr_path = base / 'costa-rica.m3u'
-          cr_text = cr_path.read_text(encoding='utf-8')
-          existing_names = cr_text.lower()
-          additions = []
-          for tvg_id, logo, name, url in costa_rica_additions:
-              if name.lower() not in existing_names:
-                  logo_attr = f' tvg-logo="{logo}"' if logo else ''
-                  additions.extend([
-                      f'#EXTINF:-1 tvg-id="{tvg_id}"{logo_attr} group-title="General",{name}',
-                      url,
-                  ])
-          if additions:
-              cr_path.write_text(cr_text.rstrip() + '\n' + '\n'.join(additions) + '\n', encoding='utf-8')
 
           channels = json.loads(Path('/tmp/channels.json').read_text(encoding='utf-8'))
           countries = json.loads(Path('/tmp/countries.json').read_text(encoding='utf-8'))
+          meta = {c.get('id'): c for c in channels if c.get('id')}
           country_names = {c.get('code'): c.get('name', c.get('code')) for c in countries}
-          channel_country = {c.get('id'): c.get('country') for c in channels if c.get('id')}
-          channel_categories = {c.get('id'): c.get('categories') or [] for c in channels if c.get('id')}
-          central_codes = {'BZ', 'CR', 'SV', 'GT', 'HN', 'NI', 'PA'}
 
-          def set_group(line, group):
+          central = [
+              ('Belize','belize.m3u'), ('Costa Rica','costa-rica.m3u'),
+              ('El Salvador','el-salvador.m3u'), ('Guatemala','guatemala.m3u'),
+              ('Honduras','honduras.m3u'), ('Nicaragua','nicaragua.m3u'), ('Panama','panama.m3u')]
+
+          # Keep previously curated Costa Rica alternatives.
+          cr_additions = [
+              ('TicaVision.cr','TicaVisión - Alternative','https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
+              ('Trivision36.cr','Trivisión 36 - Alternative','https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403'),
+              ('Teletica.cr','Teletica 7 - Alternative','https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8'),
+              ('Canal4.cr','Repretel Canal 4 - Alternative','https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8'),
+              ('Canal6.cr','Repretel Canal 6 - Alternative','https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8'),
+              ('Canal11.cr','Repretel Canal 11 - Alternative','https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8')]
+          cr = Path('Countries/Central-America/costa-rica.m3u')
+          txt = cr.read_text(encoding='utf-8')
+          for cid,name,url in cr_additions:
+              if name.lower() not in txt.lower():
+                  txt += f'\n#EXTINF:-1 tvg-id="{cid}" group-title="General",{name}\n{url}\n'
+          cr.write_text(txt, encoding='utf-8')
+
+          def tvg_id(line):
+              m=re.search(r'tvg-id="([^"]+)"',line); return m.group(1) if m else None
+          def set_group(line,group):
               if 'group-title=' in line:
-                  return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', line)
-              comma = line.find(',')
-              if comma != -1:
-                  return line[:comma] + f' group-title="{group}"' + line[comma:]
-              return line
+                  return re.sub(r'group-title="[^"]*"',f'group-title="{group}"',line)
+              p=line.find(','); return line[:p]+f' group-title="{group}"'+line[p:] if p>=0 else line
+          def entries(path):
+              cur=None; extras=[]
+              for line in Path(path).read_text(encoding='utf-8').splitlines():
+                  if line.startswith('#EXTINF:'): cur=line; extras=[]
+                  elif line.startswith('#') and cur: extras.append(line)
+                  elif line and line!='#EXTM3U' and cur:
+                      yield cur,extras,line; cur=None; extras=[]
+          def base_id(line):
+              x=tvg_id(line); return x.split('@',1)[0] if x else None
 
-          def tvg_id_from(line):
-              m = re.search(r'tvg-id="([^"]+)"', line)
-              return m.group(1) if m else None
+          # Only a few broad sections, avoiding dozens of one-channel groups.
+          def broad_category(cid,line):
+              cats=(meta.get(cid) or {}).get('categories') or []
+              s=' '.join(str(x).lower() for x in cats)
+              name=line.split(',',1)[-1].lower()
+              s += ' '+name
+              if any(x in s for x in ['news','weather']): return 'News & Weather'
+              if any(x in s for x in ['kids','children','animation','cartoon']): return 'Kids'
+              if any(x in s for x in ['movie','movies','cinema','film']): return 'Movies'
+              if any(x in s for x in ['series','entertainment','comedy','drama']): return 'Series & Entertainment'
+              if any(x in s for x in ['sport','football','soccer','baseball','basketball']): return 'Sports'
+              if any(x in s for x in ['music']): return 'Music'
+              if any(x in s for x in ['documentary','science','education','culture']): return 'Documentary & Culture'
+              return 'General'
 
-          def category_for(channel_id, original_line):
-              categories = channel_categories.get(channel_id) or []
-              if categories:
-                  return ' / '.join(str(x).replace('_', ' ').title() for x in categories)
-              m = re.search(r'group-title="([^"]*)"', original_line)
-              if m and m.group(1).strip():
-                  return m.group(1).strip()
-              return 'Other'
+          def is_spanish_us(cid,line):
+              m=meta.get(cid) or {}
+              langs=[str(x).lower() for x in (m.get('languages') or [])]
+              text=(cid or '').lower()+' '+line.lower()
+              return any(x in langs for x in ['spa','es','spanish']) or any(x in text for x in ['univision','telemundo','estrella','televisa','azteca','latino','español','spanish'])
 
-          output = ['#EXTM3U']
-          seen = set()
-          seen_ids = set()
+          out=['#EXTM3U']; seen=set(); seen_ids=set()
+          def add(ext,extras,url):
+              key=(base_id(ext) or ext,url)
+              if key in seen:return
+              out.extend([ext,*extras,url]); seen.add(key)
+              if base_id(ext):seen_ids.add(base_id(ext))
 
-          def add_entry(extinf, extras, url):
-              key = (tvg_id_from(extinf) or extinf, url)
-              if key in seen:
-                  return False
-              output.append(extinf)
-              output.extend(extras)
-              output.append(url)
-              seen.add(key)
-              cid = tvg_id_from(extinf)
-              if cid:
-                  seen_ids.add(cid.split('@', 1)[0])
-              return True
+          # 1) USA: English and Spanish sections, each using the same compact categories.
+          for ext,extra,url in entries('Americas/usa.m3u'):
+              cid=base_id(ext); cat=broad_category(cid,ext)
+              group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}'
+              add(set_group(ext,group),extra,url)
 
-          # Central America stays grouped by country.
-          for country, filename in central_countries:
-              lines = (base / filename).read_text(encoding='utf-8').splitlines()
-              current_extinf = None
-              extras = []
-              for line in lines:
-                  if line.startswith('#EXTINF:'):
-                      current_extinf = set_group(line, country)
-                      extras = []
-                  elif line.startswith('#') and current_extinf:
-                      extras.append(line)
-                  elif line and line != '#EXTM3U' and current_extinf:
-                      add_entry(current_extinf, extras, line)
-                      current_extinf = None
-                      extras = []
+          # 2) Mexico: compact broad categories.
+          for ext,extra,url in entries('Americas/mexico.m3u'):
+              add(set_group(ext,'Mexico - '+broad_category(base_id(ext),ext)),extra,url)
 
-          regional_files = [
-              (Path('Americas/north-america.m3u'), True),
-              (Path('Americas/south-america.m3u'), False),
-              (Path('Europe/europe.m3u'), False),
-          ]
-          for path, country_and_category in regional_files:
-              lines = path.read_text(encoding='utf-8').splitlines()
-              current_extinf = None
-              extras = []
-              for line in lines:
-                  if line.startswith('#EXTINF:'):
-                      tvg_id = tvg_id_from(line)
-                      channel_id = tvg_id.split('@', 1)[0] if tvg_id else None
-                      code = channel_country.get(channel_id)
-                      if code in central_codes:
-                          current_extinf = None
-                          extras = []
-                          continue
-                      country = country_names.get(code, code or 'Other')
-                      if country_and_category:
-                          category = category_for(channel_id, line)
-                          group = f'{country} - {category}'
-                      else:
-                          group = country
-                      current_extinf = set_group(line, group)
-                      extras = []
-                  elif line.startswith('#') and current_extinf:
-                      extras.append(line)
-                  elif line and line != '#EXTM3U' and current_extinf:
-                      add_entry(current_extinf, extras, line)
-                      current_extinf = None
-                      extras = []
+          # 3) Central America: one section per country, as requested.
+          base=Path('Countries/Central-America')
+          for country,file in central:
+              for ext,extra,url in entries(base/file): add(set_group(ext,country),extra,url)
 
-          # Add USA + Spain secondary streams only when that channel ID is not already
-          # represented in the primary build. This avoids cluttering the master list.
-          secondary_files = [
-              (Path('Sources/Ungeoblocked/US.m3u'), 'United States'),
-              (Path('Sources/Ungeoblocked/ES.m3u'), 'Spain'),
-          ]
-          for path, country in secondary_files:
-              lines = path.read_text(encoding='utf-8').splitlines()
-              current_extinf = None
-              extras = []
-              for line in lines:
-                  if line.startswith('#EXTINF:'):
-                      cid = tvg_id_from(line)
-                      base_id = cid.split('@', 1)[0] if cid else None
-                      if base_id and base_id in seen_ids:
-                          current_extinf = None
-                          extras = []
-                          continue
-                      category = category_for(base_id, line) if country == 'United States' else 'Ungeoblocked'
-                      group = f'{country} - {category}' if country == 'United States' else f'{country} - Ungeoblocked'
-                      current_extinf = set_group(line, group)
-                      extras = []
-                  elif line.startswith('#') and current_extinf:
-                      extras.append(line)
-                  elif line and line != '#EXTM3U' and current_extinf:
-                      add_entry(current_extinf, extras, line)
-                      current_extinf = None
-                      extras = []
+          # 4) South America: keep every channel grouped only by its country.
+          for ext,extra,url in entries('Americas/south-america.m3u'):
+              cid=base_id(ext); code=(meta.get(cid) or {}).get('country')
+              country=country_names.get(code,code or 'South America')
+              add(set_group(ext,country),extra,url)
 
-          Path('fernando-tv.m3u').write_text('\n'.join(output) + '\n', encoding='utf-8')
+          # 5) Europe: Spain and Italy only, one section per country.
+          for country,path in [('Spain','Europe/spain.m3u'),('Italy','Europe/italy.m3u')]:
+              for ext,extra,url in entries(path): add(set_group(ext,country),extra,url)
+
+          # Secondary USA/Spain streams only if channel ID is not already present.
+          for country,path in [('USA','Sources/Ungeoblocked/US.m3u'),('Spain','Sources/Ungeoblocked/ES.m3u')]:
+              for ext,extra,url in entries(path):
+                  cid=base_id(ext)
+                  if cid and cid in seen_ids: continue
+                  if country=='USA':
+                      cat=broad_category(cid,ext)
+                      group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}'
+                  else: group='Spain'
+                  add(set_group(ext,group),extra,url)
+
+          # RT News: public RT/IPTV-org stream. It may be geographically unavailable
+          # in some locations; no geo-restriction bypass is attempted.
+          add('#EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News', [],
+              'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')
+
+          Path('fernando-tv.m3u').write_text('\n'.join(out)+'\n',encoding='utf-8')
           print(f'Built master playlist with {len(seen)} unique streams')
           PY
 
