@@ -8469,3 +8469,9 @@ http://185.189.225.149/fdf/index.m3u8
 http://185.189.225.157/BOING/index.m3u8
 #EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News
 https://rt-glb.rttv.com/live/rtnews/playlist.m3u8
+#EXTINF:-1 tvg-id="RTenEspanol.ru@SD" group-title="International News",RT en Español
+https://rt-esp.rttv.com/live/rtesp/playlist.m3u8
+#EXTINF:-1 tvg-id="EuronewsSpanish.fr@SD" group-title="International News",Euronews Español
+https://cdn-euronews.akamaized.net/live/eds/euronews-es/25053/index.m3u8
+#EXTINF:-1 tvg-id="AlJazeera.qa@English" group-title="International News",Al Jazeera English
+https://live-hls-apps-aje-v3-fa.getaj.net/AJE/index.m3u8
