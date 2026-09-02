@@ -3795,8 +3795,6 @@ http://138.117.4.70:8075/Canal04_CooTelmnbv/playlist.m3u8
 http://138.117.4.70:8075/Canal06_CooTel/playlist.m3u8
 #EXTINF:-1 tvg-id="Canal7Boaco.ni@SD" tvg-logo="https://i.imgur.com/chXNX9k.jpeg" group-title="Nicaragua",Canal 7 Boaco (1080p) [Not 24/7]
 https://cdn.amixtv.com/c7boaco/index.m3u8
-#EXTINF:-1 tvg-id="Canal10.ni@SD" tvg-logo="https://i.imgur.com/ztp781b.png" group-title="Nicaragua",Canal 10 (360p)
-https://www.canal10.com.ni/envivo
 #EXTINF:-1 tvg-id="Canal15.ni@SD" tvg-logo="https://i.imgur.com/DGBMuEs.png" group-title="Nicaragua",Canal 15 Nicaragüense (1080p) [Not 24/7]
 https://cootv.cootel.com.ni:8095/Canal15_CooTel/playlist.m3u8
 #EXTINF:-1 tvg-id="CanalCvision.ni@SD" tvg-logo="https://i.imgur.com/WUq3NlG.png" group-title="Nicaragua",Canal Cvisión (720p) [Not 24/7]
@@ -3805,10 +3803,6 @@ https://stream.cvision.live/cvision_stream.m3u8
 https://cootv.cootel.com.ni:8095/Canal23_CooTel/playlist.m3u8
 #EXTINF:-1 tvg-id="EscuchameRadioTV.ni@SD" tvg-logo="https://i.imgur.com/gt6UvG8.png" group-title="Nicaragua",Escúchame Radio TV (720p) [Not 24/7]
 https://stmv1.transmissaodigital.com/pedro9800/pedro9800/playlist.m3u8
-#EXTINF:-1 tvg-id="JBN.ni@SD" tvg-logo="https://i.imgur.com/vFi0FMZ.png" group-title="Nicaragua",JBN Canal 39 (720p) [Not 24/7]
-https://hdbox.chunklistv.com/live?stream=jbn39
-#EXTINF:-1 tvg-id="MegaBox.ni@SD" tvg-logo="https://i.imgur.com/JqaW7Ei.png" group-title="Nicaragua",MegaBox (720p) [Not 24/7]
-https://hdbox.chunklistv.com/live?stream=megabox
 #EXTINF:-1 tvg-id="MTVChontales.ni@SD" tvg-logo="https://i.imgur.com/zgUPYdv.png" group-title="Nicaragua",MTV Chontales (720p) [Not 24/7]
 https://altair.hostingnica.net/hls/mtv_stream/index.m3u8
 #EXTINF:-1 tvg-id="OlamMetroTV.ni@SD" tvg-logo="https://i.imgur.com/dDZnyUA.jpeg" group-title="Nicaragua",Olam Metro TV (720p)
@@ -3817,10 +3811,6 @@ https://netzerstreaming.com:4433/hls/olammetro/index.m3u8
 https://live.tvcontrolcp.com:1936/8286/8286/playlist.m3u8
 #EXTINF:-1 tvg-id="TN8.ni@SD" tvg-logo="https://i.imgur.com/m0Zdxiz.png" group-title="Nicaragua",TN8 (1080p)
 https://streamingcws30.com/tn8/videotn8/playlist.m3u8
-#EXTINF:-1 tvg-id="TV45.ni@SD" tvg-logo="https://i.imgur.com/sI0msrn.png" group-title="Nicaragua",TV45-3ABN Nicaragua (720p) [Not 24/7]
-https://hdbox.chunklistv.com/live?stream=3abn-nicaragua
-#EXTINF:-1 tvg-id="TVONENicaragua.ni@SD" tvg-logo="https://i.imgur.com/FNk6rdz.png" group-title="Nicaragua",TVONE Nicaragua (720p) [Not 24/7]
-https://hdbox.chunklistv.com/live?stream=tvone
 #EXTINF:-1 tvg-id="VivaNicaraguaCanal13.ni@SD" tvg-logo="https://i.imgur.com/9q7Ajz4.png" group-title="Nicaragua",Viva Nicaragua Canal 13 (720p)
 https://cdn.vivamediosni.com/viva_720p/index.m3u8
 #EXTINF:-1 tvg-id="VivaTV.ni@SD" tvg-logo="https://i.imgur.com/n0buXRa.jpeg" group-title="Nicaragua",Viva TV Canal 30 San Juan de Río Coco [Not 24/7]
@@ -3877,6 +3867,8 @@ https://bcovlive-a.akamaihd.net/628aecb4fccb4c52b4f9c8d5cc57fb73/us-west-2/60580
 http://15.204.246.24:8080/UniversalHD/index.m3u8
 #EXTINF:-1 tvg-id="VisionLatina.pa@SD" tvg-logo="https://i.imgur.com/TG30lWA.jpg" group-title="Panama",Vision Latina (1080p)
 https://cdn-cloudfront.us-east-1.prod.ingest.aws-infra.dacast.com/live/64917431-2f51-0a46-d4d0-04d111b2393f/master.m3u8
+#EXTINF:-1 tvg-id="Canal6.ni@SD" group-title="Nicaragua",Canal 6 Nicaragua - Alternative
+http://138.117.4.70:8075/Canal06_CooTeljhg/playlist.m3u8
 #EXTINF:-1 tvg-id="3ABNInternational.us@SD" tvg-logo="https://i.imgur.com/IecOZHR.png" group-title="United States",3ABN International Network (720p)
 https://3abn.bozztv.com/3abn2/Int_live/smil:Int_live.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="Paraguay",4DmásNoticias TV (1080p) [Not 24/7]
