@@ -60,6 +60,7 @@ jobs:
           for cid,name,url in cr_additions:
             if name.lower() not in txt.lower(): txt+=f'\n#EXTINF:-1 tvg-id="{cid}" group-title="General",{name}\n{url}\n'
           cr.write_text(txt,encoding='utf-8')
+
           def tvg_id(line):
             m=re.search(r'tvg-id="([^"]+)"',line); return m.group(1) if m else None
           def set_group(line,group):
@@ -86,6 +87,10 @@ jobs:
           def is_spanish_us(cid,line):
             m=meta.get(cid) or {};langs=[str(x).lower() for x in (m.get('languages') or [])];text=(cid or '').lower()+' '+line.lower()
             return any(x in langs for x in ['spa','es','spanish']) or any(x in text for x in ['univision','telemundo','estrella','televisa','azteca','latino','español','spanish'])
+          def direct_stream(url):
+            u=url.lower().split('?',1)[0]
+            return '.m3u8' in u or '.mpd' in u
+
           out=['#EXTM3U'];seen=set();seen_ids=set()
           def add(ext,extras,url):
             key=(base_id(ext) or ext,url)
@@ -95,9 +100,22 @@ jobs:
           for ext,extra,url in entries('Americas/usa.m3u'):
             cid=base_id(ext);cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}';add(set_group(ext,group),extra,url)
           for ext,extra,url in entries('Americas/mexico.m3u'):add(set_group(ext,'Mexico - '+broad_category(base_id(ext),ext)),extra,url)
+
           base=Path('Countries/Central-America')
           for country,file in central:
-            for ext,extra,url in entries(base/file):add(set_group(ext,country),extra,url)
+            for ext,extra,url in entries(base/file):
+              # Nicaragua has several web-page URLs that an M3U player cannot parse.
+              # Keep only actual HLS/DASH stream URLs in the playable Nicaragua group.
+              if country=='Nicaragua' and not direct_stream(url):
+                continue
+              add(set_group(ext,country),extra,url)
+
+          # Nicaragua reliability additions. Keep these as explicit alternatives rather
+          # than replacing upstream entries. The Canal 6 alternate was accepted by
+          # IPTV-org and is useful because the upstream CooTel path has changed before.
+          add('#EXTINF:-1 tvg-id="Canal6.ni@SD" group-title="Nicaragua",Canal 6 Nicaragua - Alternative',[],
+              'http://138.117.4.70:8075/Canal06_CooTeljhg/playlist.m3u8')
+
           for ext,extra,url in entries('Americas/south-america.m3u'):
             cid=base_id(ext);code=(meta.get(cid) or {}).get('country');country=country_names.get(code,code or 'South America');add(set_group(ext,country),extra,url)
           for country,path in [('Spain','Europe/spain.m3u'),('Italy','Europe/italy.m3u')]:
@@ -110,8 +128,6 @@ jobs:
                 cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}'
               else:group='Spain'
               add(set_group(ext,group),extra,url)
-
-          # Small international news section. Spanish versions are included where available.
           add('#EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News',[], 'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="RTenEspanol.ru@SD" group-title="International News",RT en Español',[], 'https://rt-esp.rttv.com/live/rtesp/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="EuronewsSpanish.fr@SD" group-title="International News",Euronews Español',[], 'https://cdn-euronews.akamaized.net/live/eds/euronews-es/25053/index.m3u8')
