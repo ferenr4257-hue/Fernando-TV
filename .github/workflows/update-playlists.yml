@@ -53,6 +53,17 @@ jobs:
           meta={c.get('id'):c for c in channels if c.get('id')}
           country_names={c.get('code'):c.get('name',c.get('code')) for c in countries}
           central=[('Belize','belize.m3u'),('Costa Rica','costa-rica.m3u'),('El Salvador','el-salvador.m3u'),('Guatemala','guatemala.m3u'),('Honduras','honduras.m3u'),('Nicaragua','nicaragua.m3u'),('Panama','panama.m3u')]
+          cr_additions=[
+            ('TicaVision.cr','TicaVisión - Alternative','https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
+            ('Trivision36.cr','Trivisión 36 - Alternative','https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403'),
+            ('Teletica.cr','Teletica 7 - Alternative','https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8'),
+            ('Canal4.cr','Repretel Canal 4 - Alternative','https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8'),
+            ('Canal6.cr','Repretel Canal 6 - Alternative','https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8'),
+            ('Canal11.cr','Repretel Canal 11 - Alternative','https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8')]
+          cr=Path('Countries/Central-America/costa-rica.m3u');txt=cr.read_text(encoding='utf-8')
+          for cid,name,url in cr_additions:
+            if name.lower() not in txt.lower():txt+=f'\n#EXTINF:-1 tvg-id="{cid}" group-title="General",{name}\n{url}\n'
+          cr.write_text(txt,encoding='utf-8')
           def tvg_id(line):
             m=re.search(r'tvg-id="([^"]+)"',line);return m.group(1) if m else None
           def set_group(line,group):
