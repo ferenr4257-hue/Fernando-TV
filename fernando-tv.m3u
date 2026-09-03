@@ -3127,6 +3127,16 @@ https://cloudvideo.servers10.com:8081/8198/index.m3u8
 https://acceso.radiosportstv.online:3022/stream/play.m3u8
 #EXTINF:-1 tvg-id="ZurquiTV.cr@SD" tvg-logo="https://i.imgur.com/XvktUBB.jpg" group-title="Costa Rica",Zurquí TV (720p)
 https://videoserver.tmcreativos.com:19360/gesfnvpamn/gesfnvpamn.m3u8
+#EXTINF:-1 tvg-id="Trivision36.cr" group-title="Costa Rica",Trivisión 36 - Alternative
+https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403
+#EXTINF:-1 tvg-id="Teletica.cr" group-title="Costa Rica",Teletica 7 - Alternative
+https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8
+#EXTINF:-1 tvg-id="Canal4.cr" group-title="Costa Rica",Repretel Canal 4 - Alternative
+https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8
+#EXTINF:-1 tvg-id="Canal6.cr" group-title="Costa Rica",Repretel Canal 6 - Alternative
+https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8
+#EXTINF:-1 tvg-id="Canal11.cr" group-title="Costa Rica",Repretel Canal 11 - Alternative
+https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8
 #EXTINF:-1 tvg-id="AgapeTV.sv@SD" tvg-logo="https://i.imgur.com/DsGmrnc.png" group-title="El Salvador",Agape TV (720p)
 https://5fc584f3f19c9.streamlock.net/agape/smil:agape.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="ArboldeVidaTV.sv@SD" tvg-logo="https://i.imgur.com/4sGDc4X.jpg" group-title="El Salvador",Árbol de Vida TV (240p) [Not 24/7]
