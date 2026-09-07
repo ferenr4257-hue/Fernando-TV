@@ -56,7 +56,6 @@ jobs:
           cr_additions=[
             ('TicaVision.cr','TicaVisión - Alternative','https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
             ('Trivision36.cr','Trivisión 36 - Alternative','https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403'),
-            ('Teletica.cr','Teletica 7 - Alternative','https://www.teletica.com/TeleticaLiveStreamCR/Stream/playlist_dvr.m3u8'),
             ('Canal4.cr','Repretel Canal 4 - Alternative','https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8'),
             ('Canal6.cr','Repretel Canal 6 - Alternative','https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8'),
             ('Canal11.cr','Repretel Canal 11 - Alternative','https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8')]
@@ -124,7 +123,6 @@ jobs:
                 cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}'
               else:group='Spain'
               add(set_group(ext,group),extra,url)
-          # International News stays as its own section, not as country groups.
           add('#EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News',[], 'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="RTenEspanol.ru@SD" group-title="International News",RT en Español',[], 'https://rt-esp.rttv.com/live/rtesp/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="EuronewsSpanish.fr@SD" group-title="International News",Euronews Español',[], 'https://cdn-euronews.akamaized.net/live/eds/euronews-es/25053/index.m3u8')
