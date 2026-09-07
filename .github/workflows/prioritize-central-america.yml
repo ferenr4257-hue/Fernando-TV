@@ -1,0 +1,64 @@
+name: Prioritize Central America
+
+on:
+  workflow_run:
+    workflows: ["Update IPTV playlists"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reorder:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Put Central America first
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          path = Path('fernando-tv.m3u')
+          lines = path.read_text(encoding='utf-8').splitlines()
+          header = lines[0] if lines and lines[0].startswith('#EXTM3U') else '#EXTM3U'
+          priority = ['Costa Rica','Nicaragua','Panama','Guatemala','El Salvador','Honduras','Belize']
+          buckets = {g: [] for g in priority}
+          rest = []
+
+          i = 1
+          while i < len(lines):
+            if not lines[i].startswith('#EXTINF:'):
+              i += 1
+              continue
+            entry = [lines[i]]
+            i += 1
+            while i < len(lines) and not lines[i].startswith('#EXTINF:'):
+              if lines[i]: entry.append(lines[i])
+              i += 1
+            m = re.search(r'group-title="([^"]*)"', entry[0])
+            group = m.group(1) if m else ''
+            if group in buckets:
+              buckets[group].extend(entry)
+            else:
+              rest.extend(entry)
+
+          out = [header]
+          for group in priority:
+            out.extend(buckets[group])
+          out.extend(rest)
+          path.write_text('\n'.join(out) + '\n', encoding='utf-8')
+          PY
+      - name: Commit reordered master
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fernando-tv.m3u
+          if git diff --cached --quiet; then
+            echo "Central America already first"
+          else
+            git commit -m "Put Central America channels first"
+            git push
+          fi
