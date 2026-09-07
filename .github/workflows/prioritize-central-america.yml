@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Put Central America first
+      - name: Put Central America and FOX HBO first
         run: |
           python3 - <<'PY'
           import re
@@ -28,28 +28,45 @@ jobs:
           buckets = {g: [] for g in priority}
           rest = []
 
-          i = 1
-          while i < len(lines):
-            if not lines[i].startswith('#EXTINF:'):
-              i += 1
-              continue
-            entry = [lines[i]]
-            i += 1
-            while i < len(lines) and not lines[i].startswith('#EXTINF:'):
-              if lines[i]: entry.append(lines[i])
-              i += 1
-            m = re.search(r'group-title="([^"]*)"', entry[0])
-            group = m.group(1) if m else ''
-            if group in buckets:
-              buckets[group].extend(entry)
-            else:
-              rest.extend(entry)
+          def parse_entries(lines):
+            entries=[]; i=1
+            while i < len(lines):
+              if not lines[i].startswith('#EXTINF:'):
+                i += 1; continue
+              entry=[lines[i]]; i += 1
+              while i < len(lines) and not lines[i].startswith('#EXTINF:'):
+                if lines[i]: entry.append(lines[i])
+                i += 1
+              entries.append(entry)
+            return entries
 
-          out = [header]
+          for entry in parse_entries(lines):
+            m=re.search(r'group-title="([^"]*)"',entry[0]); group=m.group(1) if m else ''
+            if group in buckets: buckets[group].append(entry)
+            else: rest.append(entry)
+
+          # Add the separate FOX/HBO source to the master near the top without changing its source file.
+          extra=[]
+          source=Path('Sources/FOX-HBO-Scribd.m3u')
+          if source.exists():
+            extra=parse_entries(source.read_text(encoding='utf-8').splitlines())
+
+          # Deduplicate by stream URL so reruns remain clean.
+          seen=set(); out=[header]
+          def emit(entry):
+            url=entry[-1] if entry else ''
+            if url in seen: return
+            seen.add(url); out.extend(entry)
+
+          # Central America stays at the very top in this exact country order.
           for group in priority:
-            out.extend(buckets[group])
-          out.extend(rest)
-          path.write_text('\n'.join(out) + '\n', encoding='utf-8')
+            for entry in buckets[group]: emit(entry)
+          # Then the newly-added FOX/HBO collection.
+          for entry in extra: emit(entry)
+          # Then everything else in its existing order.
+          for entry in rest: emit(entry)
+
+          path.write_text('\n'.join(out)+'\n',encoding='utf-8')
           PY
       - name: Commit reordered master
         run: |
@@ -57,8 +74,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add fernando-tv.m3u
           if git diff --cached --quiet; then
-            echo "Central America already first"
+            echo "Priority channels already first"
           else
-            git commit -m "Put Central America channels first"
+            git commit -m "Keep Central America and FOX HBO first"
             git push
           fi
