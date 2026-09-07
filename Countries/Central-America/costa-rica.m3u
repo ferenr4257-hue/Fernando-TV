@@ -146,6 +146,9 @@ https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=4
 #EXTINF:-1 tvg-id="Canal4.cr" group-title="General",Repretel Canal 4 - Alternative
 https://alba-cr-repretel-c4.stream.mediatiquestream.com/index.m3u8
 
+#EXTINF:-1 tvg-id="Canal4IPTVCat.cr" group-title="General",Repretel Canal 4 - IPTVCat Test
+https://list.iptvcat.com/my_list/s/18749fccdbea924ceb8ccca7253218d0.m3u8
+
 #EXTINF:-1 tvg-id="Canal6.cr" group-title="General",Repretel Canal 6 - Alternative
 https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8
 
