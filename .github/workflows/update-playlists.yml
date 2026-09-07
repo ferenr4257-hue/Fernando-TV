@@ -22,8 +22,8 @@ jobs:
       - name: Download and build public playlists
         run: |
           set -e
-          mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked Sources/Free-TV
-          rm -rf Sources/Nexus
+          mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked
+          rm -rf Sources/Nexus Sources/Free-TV
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/us.m3u -o Americas/usa.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/mx.m3u -o Americas/mexico.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/southam.m3u -o Americas/south-america.m3u
@@ -38,7 +38,6 @@ jobs:
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/pa.m3u -o Countries/Central-America/panama.m3u
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/US.m3u -o Sources/Ungeoblocked/US.m3u
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/ES.m3u -o Sources/Ungeoblocked/ES.m3u
-          curl -L --fail --retry 3 https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8 -o Sources/Free-TV/playlist.m3u8
           curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
           curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
           find Europe -type f ! -name 'spain.m3u' ! -name 'italy.m3u' -delete
@@ -94,11 +93,6 @@ jobs:
             return any(x in langs for x in ['spa','es','spanish']) or any(x in text for x in ['univision','telemundo','estrella','televisa','azteca','latino','español','spanish'])
           def direct_stream(url):
             u=url.lower().split('?',1)[0];return '.m3u8' in u or '.mpd' in u
-          def free_tv_allowed(ext):
-            group=attr(ext,'group-title').strip().lower(); blocked_lower={x.lower() for x in blocked}
-            if any(x in group for x in blocked_lower):return False
-            allowed_words=['usa','united states','us ','english','spanish','latino','latin','mexico','spain','italy','movie','cinema','series','entertainment','sport','news','kids','documentary','music','general']
-            return any(x in group for x in allowed_words)
           out=['#EXTM3U'];seen=set();seen_ids=set();seen_urls=set()
           def add(ext,extras,url):
             cid=base_id(ext);key=(cid or ext,url)
@@ -130,12 +124,6 @@ jobs:
                 cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}'
               else:group='Spain'
               add(set_group(ext,group),extra,url)
-          for ext,extra,url in entries('Sources/Free-TV/playlist.m3u8'):
-            if not free_tv_allowed(ext):continue
-            cid=base_id(ext)
-            if cid and cid in seen_ids:continue
-            group=attr(ext,'group-title') or 'General'
-            add(set_group(ext,'Free TV - '+group),extra,url)
           # International News stays as its own section, not as country groups.
           add('#EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News',[], 'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="RTenEspanol.ru@SD" group-title="International News",RT en Español',[], 'https://rt-esp.rttv.com/live/rtesp/playlist.m3u8')
