@@ -22,7 +22,8 @@ jobs:
       - name: Download and build public playlists
         run: |
           set -e
-          mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked Sources/Free-TV Sources/Nexus
+          mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked Sources/Free-TV
+          rm -rf Sources/Nexus
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/us.m3u -o Americas/usa.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/mx.m3u -o Americas/mexico.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/southam.m3u -o Americas/south-america.m3u
@@ -38,7 +39,6 @@ jobs:
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/US.m3u -o Sources/Ungeoblocked/US.m3u
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/ES.m3u -o Sources/Ungeoblocked/ES.m3u
           curl -L --fail --retry 3 https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8 -o Sources/Free-TV/playlist.m3u8
-          curl -L --fail --retry 3 https://dearbulut.github.io/iptv/playlists/online.m3u -o Sources/Nexus/online.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
           curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
           find Europe -type f ! -name 'spain.m3u' ! -name 'italy.m3u' -delete
@@ -99,14 +99,6 @@ jobs:
             if any(x in group for x in blocked_lower):return False
             allowed_words=['usa','united states','us ','english','spanish','latino','latin','mexico','spain','italy','movie','cinema','series','entertainment','sport','news','kids','documentary','music','general']
             return any(x in group for x in allowed_words)
-          def nexus_allowed(ext):
-            country=attr(ext,'tvg-country').strip(); cid=base_id(ext)
-            if not country and cid and '.' in cid: country=cid.rsplit('.',1)[-1]
-            codes={'qa':'Qatar','in':'India','kr':'South Korea','am':'Armenia','se':'Sweden','uk':'United Kingdom','gb':'United Kingdom','cn':'China','pr':'Puerto Rico','gy':'Guyana','cu':'Cuba','nl':'Netherlands','hu':'Hungary','fr':'France','pl':'Poland','pt':'Portugal','ca':'Canada','ir':'Iran','il':'Israel','tr':'Turkey','kp':'North Korea','th':'Thailand','jp':'Japan','at':'Austria','ru':'Russia','sr':'Suriname','ch':'Switzerland','mc':'Monaco','gf':'French Guiana','mz':'Mozambique','za':'South Africa','id':'Indonesia','sg':'Singapore'}
-            tokens=[x.strip().lower() for x in re.split(r'[,;/ ]+',country) if x.strip()]
-            if any(codes.get(x) in blocked for x in tokens):return False
-            if country in blocked:return False
-            return True
           out=['#EXTM3U'];seen=set();seen_ids=set();seen_urls=set()
           def add(ext,extras,url):
             cid=base_id(ext);key=(cid or ext,url)
@@ -144,14 +136,6 @@ jobs:
             if cid and cid in seen_ids:continue
             group=attr(ext,'group-title') or 'General'
             add(set_group(ext,'Free TV - '+group),extra,url)
-          # IPTV Nexus secondary source: only streams that passed its latest health check.
-          # Keep blocked-country rules and deduplicate against all sources above.
-          for ext,extra,url in entries('Sources/Nexus/online.m3u'):
-            if not nexus_allowed(ext):continue
-            cid=base_id(ext)
-            if cid and cid in seen_ids:continue
-            group=attr(ext,'group-title') or broad_category(cid,ext)
-            add(set_group(ext,'Nexus - '+group),extra,url)
           # International News stays as its own section, not as country groups.
           add('#EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News',[], 'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="RTenEspanol.ru@SD" group-title="International News",RT en Español',[], 'https://rt-esp.rttv.com/live/rtesp/playlist.m3u8')
