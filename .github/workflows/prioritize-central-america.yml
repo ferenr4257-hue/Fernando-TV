@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Put Central America and FOX HBO first
+      - name: Put Central America first
         run: |
           python3 - <<'PY'
           import re
@@ -43,29 +43,12 @@ jobs:
           for entry in parse_entries(lines):
             m=re.search(r'group-title="([^"]*)"',entry[0]); group=m.group(1) if m else ''
             if group in buckets: buckets[group].append(entry)
-            else: rest.append(entry)
+            elif group not in ('FOX','HBO'): rest.append(entry)
 
-          # Add the separate FOX/HBO source to the master near the top without changing its source file.
-          extra=[]
-          source=Path('Sources/FOX-HBO-Scribd.m3u')
-          if source.exists():
-            extra=parse_entries(source.read_text(encoding='utf-8').splitlines())
-
-          # Deduplicate by stream URL so reruns remain clean.
-          seen=set(); out=[header]
-          def emit(entry):
-            url=entry[-1] if entry else ''
-            if url in seen: return
-            seen.add(url); out.extend(entry)
-
-          # Central America stays at the very top in this exact country order.
+          out=[header]
           for group in priority:
-            for entry in buckets[group]: emit(entry)
-          # Then the newly-added FOX/HBO collection.
-          for entry in extra: emit(entry)
-          # Then everything else in its existing order.
-          for entry in rest: emit(entry)
-
+            for entry in buckets[group]: out.extend(entry)
+          for entry in rest: out.extend(entry)
           path.write_text('\n'.join(out)+'\n',encoding='utf-8')
           PY
       - name: Commit reordered master
@@ -74,8 +57,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add fernando-tv.m3u
           if git diff --cached --quiet; then
-            echo "Priority channels already first"
+            echo "Central America already first"
           else
-            git commit -m "Keep Central America and FOX HBO first"
+            git commit -m "Keep Central America first and remove FOX HBO"
             git push
           fi
