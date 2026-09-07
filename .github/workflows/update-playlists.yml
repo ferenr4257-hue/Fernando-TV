@@ -39,8 +39,6 @@ jobs:
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/ES.m3u -o Sources/Ungeoblocked/ES.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
           curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
-
-          # Remove obsolete Europe/Asia/regional files from earlier builds.
           find Europe -type f ! -name 'spain.m3u' ! -name 'italy.m3u' -delete
           rm -rf Asia Countries/Asia
           rm -f Americas/north-america.m3u Americas/caribbean.m3u Americas/central-america.m3u Countries/costa-rica.m3u
@@ -52,6 +50,7 @@ jobs:
           countries=json.loads(Path('/tmp/countries.json').read_text(encoding='utf-8'))
           meta={c.get('id'):c for c in channels if c.get('id')}
           country_names={c.get('code'):c.get('name',c.get('code')) for c in countries}
+          blocked={'Qatar','India','South Korea','Armenia','Sweden','United Kingdom','China','Puerto Rico','Guyana','Cuba','Netherlands','Hungary','France','Poland','Portugal','Canada','Iran','Israel','Turkey','North Korea','Thailand','Japan','Austria','Russia','Suriname','Switzerland','Monaco','French Guiana','Mozambique','South Africa','Indonesia','Singapore'}
           central=[('Belize','belize.m3u'),('Costa Rica','costa-rica.m3u'),('El Salvador','el-salvador.m3u'),('Guatemala','guatemala.m3u'),('Honduras','honduras.m3u'),('Nicaragua','nicaragua.m3u'),('Panama','panama.m3u')]
           cr_additions=[
             ('TicaVision.cr','TicaVisión - Alternative','https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
@@ -103,16 +102,19 @@ jobs:
           for ext,extra,url in entries('Americas/mexico.m3u'):add(set_group(ext,'Mexico - '+broad_category(base_id(ext),ext)),extra,url)
           base=Path('Countries/Central-America')
           for country,file in central:
+            if country in blocked:continue
             for ext,extra,url in entries(base/file):
               if country=='Nicaragua' and not direct_stream(url):continue
               add(set_group(ext,country),extra,url)
-          # Nicaragua uses upstream direct streams only until verified replacements are found.
           for ext,extra,url in entries('Americas/south-america.m3u'):
-            cid=base_id(ext);code=(meta.get(cid) or {}).get('country');country=country_names.get(code,code or 'South America');add(set_group(ext,country),extra,url)
-          # Europe is strictly Spain and Italy.
+            cid=base_id(ext);code=(meta.get(cid) or {}).get('country');country=country_names.get(code,code or 'South America')
+            if country in blocked:continue
+            add(set_group(ext,country),extra,url)
           for country,path in [('Spain','Europe/spain.m3u'),('Italy','Europe/italy.m3u')]:
+            if country in blocked:continue
             for ext,extra,url in entries(path):add(set_group(ext,country),extra,url)
           for country,path in [('USA','Sources/Ungeoblocked/US.m3u'),('Spain','Sources/Ungeoblocked/ES.m3u')]:
+            if country in blocked:continue
             for ext,extra,url in entries(path):
               cid=base_id(ext)
               if cid and cid in seen_ids:continue
@@ -120,7 +122,7 @@ jobs:
                 cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}'
               else:group='Spain'
               add(set_group(ext,group),extra,url)
-          # International News is an explicit exception to country/region filtering.
+          # International News stays as its own section, not as country groups.
           add('#EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News',[], 'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="RTenEspanol.ru@SD" group-title="International News",RT en Español',[], 'https://rt-esp.rttv.com/live/rtesp/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="EuronewsSpanish.fr@SD" group-title="International News",Euronews Español',[], 'https://cdn-euronews.akamaized.net/live/eds/euronews-es/25053/index.m3u8')
