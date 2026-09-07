@@ -22,7 +22,7 @@ jobs:
       - name: Download and build public playlists
         run: |
           set -e
-          mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked Sources/Free-TV
+          mkdir -p Americas Europe Countries/Central-America Sources/Ungeoblocked Sources/Free-TV Sources/Nexus
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/us.m3u -o Americas/usa.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/countries/mx.m3u -o Americas/mexico.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/iptv/regions/southam.m3u -o Americas/south-america.m3u
@@ -38,6 +38,7 @@ jobs:
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/US.m3u -o Sources/Ungeoblocked/US.m3u
           curl -L --fail --retry 3 https://raw.githubusercontent.com/matte-oss/iptv-ungeoblocked/main/countries/ES.m3u -o Sources/Ungeoblocked/ES.m3u
           curl -L --fail --retry 3 https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8 -o Sources/Free-TV/playlist.m3u8
+          curl -L --fail --retry 3 https://dearbulut.github.io/iptv/playlists/online.m3u -o Sources/Nexus/online.m3u
           curl -L --fail --retry 3 https://iptv-org.github.io/api/channels.json -o /tmp/channels.json
           curl -L --fail --retry 3 https://iptv-org.github.io/api/countries.json -o /tmp/countries.json
           find Europe -type f ! -name 'spain.m3u' ! -name 'italy.m3u' -delete
@@ -64,8 +65,9 @@ jobs:
           for cid,name,url in cr_additions:
             if name.lower() not in txt.lower():txt+=f'\n#EXTINF:-1 tvg-id="{cid}" group-title="General",{name}\n{url}\n'
           cr.write_text(txt,encoding='utf-8')
-          def tvg_id(line):
-            m=re.search(r'tvg-id="([^"]+)"',line);return m.group(1) if m else None
+          def attr(line,name):
+            m=re.search(rf'{re.escape(name)}="([^"]*)"',line);return m.group(1) if m else ''
+          def tvg_id(line): return attr(line,'tvg-id') or None
           def set_group(line,group):
             if 'group-title=' in line:return re.sub(r'group-title="[^"]*"',f'group-title="{group}"',line)
             p=line.find(',');return line[:p]+f' group-title="{group}"'+line[p:] if p>=0 else line
@@ -93,12 +95,18 @@ jobs:
           def direct_stream(url):
             u=url.lower().split('?',1)[0];return '.m3u8' in u or '.mpd' in u
           def free_tv_allowed(ext):
-            group=(re.search(r'group-title="([^"]*)"',ext) or [None,''])[1]
-            g=group.strip().lower()
-            blocked_lower={x.lower() for x in blocked}
-            if any(x in g for x in blocked_lower):return False
+            group=attr(ext,'group-title').strip().lower(); blocked_lower={x.lower() for x in blocked}
+            if any(x in group for x in blocked_lower):return False
             allowed_words=['usa','united states','us ','english','spanish','latino','latin','mexico','spain','italy','movie','cinema','series','entertainment','sport','news','kids','documentary','music','general']
-            return any(x in g for x in allowed_words)
+            return any(x in group for x in allowed_words)
+          def nexus_allowed(ext):
+            country=attr(ext,'tvg-country').strip(); cid=base_id(ext)
+            if not country and cid and '.' in cid: country=cid.rsplit('.',1)[-1]
+            codes={'qa':'Qatar','in':'India','kr':'South Korea','am':'Armenia','se':'Sweden','uk':'United Kingdom','gb':'United Kingdom','cn':'China','pr':'Puerto Rico','gy':'Guyana','cu':'Cuba','nl':'Netherlands','hu':'Hungary','fr':'France','pl':'Poland','pt':'Portugal','ca':'Canada','ir':'Iran','il':'Israel','tr':'Turkey','kp':'North Korea','th':'Thailand','jp':'Japan','at':'Austria','ru':'Russia','sr':'Suriname','ch':'Switzerland','mc':'Monaco','gf':'French Guiana','mz':'Mozambique','za':'South Africa','id':'Indonesia','sg':'Singapore'}
+            tokens=[x.strip().lower() for x in re.split(r'[,;/ ]+',country) if x.strip()]
+            if any(codes.get(x) in blocked for x in tokens):return False
+            if country in blocked:return False
+            return True
           out=['#EXTM3U'];seen=set();seen_ids=set();seen_urls=set()
           def add(ext,extras,url):
             cid=base_id(ext);key=(cid or ext,url)
@@ -130,14 +138,20 @@ jobs:
                 cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}'
               else:group='Spain'
               add(set_group(ext,group),extra,url)
-          # Free-TV secondary source: keep useful allowed groups, exclude blocked countries,
-          # and avoid duplicate channel IDs/stream URLs already present above.
           for ext,extra,url in entries('Sources/Free-TV/playlist.m3u8'):
             if not free_tv_allowed(ext):continue
             cid=base_id(ext)
             if cid and cid in seen_ids:continue
-            group=(re.search(r'group-title="([^"]*)"',ext) or [None,'Free TV'])[1]
-            add(set_group(ext,'Free TV - '+(group or 'General')),extra,url)
+            group=attr(ext,'group-title') or 'General'
+            add(set_group(ext,'Free TV - '+group),extra,url)
+          # IPTV Nexus secondary source: only streams that passed its latest health check.
+          # Keep blocked-country rules and deduplicate against all sources above.
+          for ext,extra,url in entries('Sources/Nexus/online.m3u'):
+            if not nexus_allowed(ext):continue
+            cid=base_id(ext)
+            if cid and cid in seen_ids:continue
+            group=attr(ext,'group-title') or broad_category(cid,ext)
+            add(set_group(ext,'Nexus - '+group),extra,url)
           # International News stays as its own section, not as country groups.
           add('#EXTINF:-1 tvg-id="RT.ru@SD" group-title="International News",RT News',[], 'https://rt-glb.rttv.com/live/rtnews/playlist.m3u8')
           add('#EXTINF:-1 tvg-id="RTenEspanol.ru@SD" group-title="International News",RT en Español',[], 'https://rt-esp.rttv.com/live/rtesp/playlist.m3u8')
