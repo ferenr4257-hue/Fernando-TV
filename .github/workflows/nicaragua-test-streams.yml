@@ -1,0 +1,49 @@
+name: Add Nicaragua test streams
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/nicaragua-test-streams.yml'
+  schedule:
+    - cron: '5 8 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  add-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Nicaragua test channels to master
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('fernando-tv.m3u')
+          s=p.read_text(encoding='utf-8')
+          marker='# NICARAGUA SCRIBD TEST STREAMS'
+          if marker in s:
+              raise SystemExit('Test streams already present')
+          channels=[2,4,6,8,9,10,11,12,13,23]
+          block=['# NICARAGUA SCRIBD TEST STREAMS']
+          for n in channels:
+              block += [f'#EXTINF:-1 group-title="Nicaragua",Canal {n} Nicaragua - Test',f'http://138.117.4.70:8079/streams/d/Canal-{n}/playlist.m3u8']
+          block='\n'.join(block)+'\n'
+          # Insert at the end of the existing Nicaragua group, before Panama when possible.
+          needle='group-title="Panama"'
+          pos=s.find(needle)
+          if pos >= 0:
+              line_start=s.rfind('#EXTINF:',0,pos)
+              s=s[:line_start]+block+s[line_start:]
+          else:
+              s += '\n'+block
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit test streams
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fernando-tv.m3u
+          if git diff --cached --quiet; then echo "No changes"; else git commit -m "Add Nicaragua test streams" && git push; fi
