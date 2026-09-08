@@ -52,7 +52,7 @@ jobs:
           meta={c.get('id'):c for c in channels if c.get('id')}
           country_names={c.get('code'):c.get('name',c.get('code')) for c in countries}
           blocked={'Qatar','India','South Korea','Armenia','Sweden','United Kingdom','China','Puerto Rico','Guyana','Cuba','Netherlands','Hungary','France','Poland','Portugal','Canada','Iran','Israel','Turkey','North Korea','Thailand','Japan','Austria','Russia','Suriname','Switzerland','Monaco','French Guiana','Mozambique','South Africa','Indonesia','Singapore'}
-          central=[('Belize','belize.m3u'),('Costa Rica','costa-rica.m3u'),('El Salvador','el-salvador.m3u'),('Guatemala','guatemala.m3u'),('Honduras','honduras.m3u'),('Nicaragua','nicaragua.m3u'),('Panama','panama.m3u')]
+          central=[('Costa Rica','costa-rica.m3u'),('Nicaragua','nicaragua.m3u'),('Panama','panama.m3u'),('Guatemala','guatemala.m3u'),('El Salvador','el-salvador.m3u'),('Honduras','honduras.m3u'),('Belize','belize.m3u')]
           cr_additions=[
             ('TicaVision.cr','TicaVisión - Alternative','https://5eac7b031d945.streamlock.net/TICAVISION/TICAVISION/playlist.m3u8'),
             ('Trivision36.cr','Trivisión 36 - Alternative','https://liveingesta118.cdnmedia.tv/trivisionlive/rtmp01-900/chunklist.m3u8?DVR=403'),
@@ -99,15 +99,19 @@ jobs:
             if key in seen or url in seen_urls:return
             out.extend([ext,*extras,url]);seen.add(key);seen_urls.add(url)
             if cid:seen_ids.add(cid)
-          for ext,extra,url in entries('Americas/usa.m3u'):
-            cid=base_id(ext);cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}';add(set_group(ext,group),extra,url)
-          for ext,extra,url in entries('Americas/mexico.m3u'):add(set_group(ext,'Mexico - '+broad_category(base_id(ext),ext)),extra,url)
           base=Path('Countries/Central-America')
           for country,file in central:
             if country in blocked:continue
             for ext,extra,url in entries(base/file):
               if country=='Nicaragua' and not direct_stream(url):continue
               add(set_group(ext,country),extra,url)
+            if country=='Costa Rica':
+              test=base/'Costa-Rica2'/'costa-rica2.m3u'
+              if test.exists():
+                for ext,extra,url in entries(test):add(set_group(ext,'Costa Rica2'),extra,url)
+          for ext,extra,url in entries('Americas/usa.m3u'):
+            cid=base_id(ext);cat=broad_category(cid,ext);group=f'USA Spanish - {cat}' if is_spanish_us(cid,ext) else f'USA - {cat}';add(set_group(ext,group),extra,url)
+          for ext,extra,url in entries('Americas/mexico.m3u'):add(set_group(ext,'Mexico - '+broad_category(base_id(ext),ext)),extra,url)
           for ext,extra,url in entries('Americas/south-america.m3u'):
             cid=base_id(ext);code=(meta.get(cid) or {}).get('country');country=country_names.get(code,code or 'South America')
             if country in blocked:continue
