@@ -147,12 +147,10 @@ https://list.iptvcat.com/my_list/s/18749fccdbea924ceb8ccca7253218d0.m3u8
 https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8
 #EXTINF:-1 tvg-id="Canal11.cr" group-title="Costa Rica",Repretel Canal 11 - Alternative
 https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8
-#EXTINF:-1 tvg-id="Teletica.cr" group-title="Costa Rica2",Teletica 7 - CXTv Test
-https://www.cxtvlive.com/live-tv/teletica
-#EXTINF:-1 tvg-id="Repretel6.cr" group-title="Costa Rica2",Repretel Canal 6 - CXTv Test
-https://www.cxtvlive.com/live-tv/tv-repretel-6
-#EXTINF:-1 tvg-id="Repretel2.cr" group-title="Costa Rica2",Repretel Canal 2 - CXTv Test
-https://www.cxtvlive.com/live-tv/tv-repretel-2
+#EXTINF:-1 tvg-id="AgrotendenciaTV.cr@SD" tvg-logo="https://i.imgur.com/frd60hR.png" group-title="Costa Rica",Agrotendencia TV (1080p)
+https://5fc584f3f19c9.streamlock.net/agrotendencia/videoagrotendencia_hls1/playlist.m3u8
+#EXTINF:-1 tvg-id="Enlace.cr@SD" tvg-logo="https://i.imgur.com/YwUVTmS.png" group-title="Costa Rica",Enlace (720p)
+http://177.234.249.178:8888/ENLACE/index.m3u8
 #EXTINF:-1 tvg-id="Canal6.ni@SD" tvg-logo="https://i.imgur.com/6BWAZdq.png" group-title="Nicaragua",Canal 6 Nicaragüense (480p) [Not 24/7]
 http://138.117.4.70:8075/Canal06_CooTel/playlist.m3u8
 #EXTINF:-1 tvg-id="Canal7Boaco.ni@SD" tvg-logo="https://i.imgur.com/chXNX9k.jpeg" group-title="Nicaragua",Canal 7 Boaco (1080p) [Not 24/7]
@@ -231,6 +229,10 @@ https://bcovlive-a.akamaihd.net/628aecb4fccb4c52b4f9c8d5cc57fb73/us-west-2/60580
 http://15.204.246.24:8080/UniversalHD/index.m3u8
 #EXTINF:-1 tvg-id="VisionLatina.pa@SD" tvg-logo="https://i.imgur.com/TG30lWA.jpg" group-title="Panama",Vision Latina (1080p)
 https://cdn-cloudfront.us-east-1.prod.ingest.aws-infra.dacast.com/live/64917431-2f51-0a46-d4d0-04d111b2393f/master.m3u8
+#EXTINF:-1 tvg-id="TropicalMoonCumbiaTV.pa@SD" tvg-logo="https://i.imgur.com/jL1kLyS.png" group-title="Panama",Tropical Moon Cumbia TV (720p)
+https://srv2.tropicalmoonmedia.com/cumbiatv/cumbiatv/playlist.m3u8
+#EXTINF:-1 tvg-id="TropicalMoonEventosTV.pa@SD" tvg-logo="https://i.imgur.com/RklPmml.png" group-title="Panama",Tropical Moon Eventos TV (720p)
+https://srv2.tropicalmoonmedia.com/eventostv/eventostv/playlist.m3u8
 #EXTINF:-1 tvg-id="AmigosTVChiquimula.gt@SD" tvg-logo="https://i.ibb.co/tLhcNTD/amigos-tv-chiquimula.png" group-title="Guatemala",Amigos TV Chiquimula (480p)
 https://antmedia.cablevisionrobles.com:5443/LiveApp/streams/CqwAgRagMvBNYN8c1731608980342.m3u8
 #EXTINF:-1 tvg-id="AuroraMediaFilms.gt@SD" tvg-logo="https://i.imgur.com/DVC5w6H.png" group-title="Guatemala",Aurora Media Films (720p)
@@ -622,6 +624,12 @@ https://streamer2.nexgen.bz/09-POSVIBES/index.m3u8
 https://streamer2.nexgen.bz/08-WAVE/index.m3u8
 #EXTINF:-1 tvg-id="XTV.bz@SD" tvg-logo="https://i.imgur.com/zDDM5hP.png" group-title="Belize",XTV (720p)
 https://streamer2.nexgen.bz/02-KREM/index.m3u8
+#EXTINF:-1 tvg-id="Teletica.cr" group-title="Costa Rica2",Teletica 7 - CXTv Test
+https://www.cxtvlive.com/live-tv/teletica
+#EXTINF:-1 tvg-id="Repretel6.cr" group-title="Costa Rica2",Repretel Canal 6 - CXTv Test
+https://www.cxtvlive.com/live-tv/tv-repretel-6
+#EXTINF:-1 tvg-id="Repretel2.cr" group-title="Costa Rica2",Repretel Canal 2 - CXTv Test
+https://www.cxtvlive.com/live-tv/tv-repretel-2
 #EXTINF:-1 tvg-id="00sReplay.us@SD" tvg-logo="https://images.pluto.tv/channels/62ba60f059624e000781c436/colorLogoPNG.png" group-title="USA - Movies",00s Replay
 https://jmp2.uk/plu-62ba60f059624e000781c436.m3u8
 #EXTINF:-1 tvg-id="DareToDreamNetwork.us@SD" tvg-logo="https://i.imgur.com/ONsAt3Z.png" group-title="USA - General",3ABN Dare To Dream Network
@@ -3967,8 +3975,6 @@ http://45.162.230.234:1935/agrobrasiltv/agrobrasiltv/playlist.m3u8
 http://45.162.64.114/AGRO_CANAL/index.m3u8
 #EXTINF:-1 tvg-id="AgroMais.br@SD" tvg-logo="https://i.imgur.com/sFcOZeo.png" group-title="Brazil",AgroMais (720p)
 http://45.162.64.114/AGROMAIS/index.m3u8
-#EXTINF:-1 tvg-id="AgrotendenciaTV.cr@SD" tvg-logo="https://i.imgur.com/frd60hR.png" group-title="Costa Rica",Agrotendencia TV (1080p)
-https://5fc584f3f19c9.streamlock.net/agrotendencia/videoagrotendencia_hls1/playlist.m3u8
 #EXTINF:-1 tvg-id="AguacateTV.ve@SD" tvg-logo="https://i.ibb.co/wpWBsgf/IMG-20230705-154622.jpg" group-title="Venezuela",Aguacate TV (1080p)
 https://streamtv.intervenhosting.net:3040/hybrid/play.m3u8
 #EXTINF:-1 tvg-id="AiredeSantaFe.ar@SD" tvg-logo="https://i.imgur.com/60vSWW0.png" group-title="Argentina",Aire de Santa Fe (1080p)
@@ -4804,8 +4810,6 @@ https://backend.energeek.cl/webtv/egfanweb/index.m3u8?token=ZZDemoIPTVGH
 https://backend.energeek.cl/webtv/egradioweb/index.m3u8?token=ZZDemoIPTVGH
 #EXTINF:-1 tvg-id="EnfoqueDigitalTV.cl@SD" tvg-logo="https://i.imgur.com/GaJzjt5.png" group-title="Chile",Enfoque Digital TV
 https://5eaccbab48461.streamlock.net:1936/8074/8074/playlist.m3u8
-#EXTINF:-1 tvg-id="Enlace.cr@SD" tvg-logo="https://i.imgur.com/YwUVTmS.png" group-title="Costa Rica",Enlace (720p)
-http://177.234.249.178:8888/ENLACE/index.m3u8
 #EXTINF:-1 tvg-id="EPATV.cl@SD" tvg-logo="https://cdn.m3u.cl/logo/1649_EPA__TV.png" group-title="Chile",EPA! TV (720p)
 https://live-evg10.tv360.bitel.com.pe/bitel/epatv/playlist.m3u8
 #EXTINF:-1 tvg-id="Erbol.bo@SD" tvg-logo="https://i.imgur.com/hn1KI7t.png" group-title="Bolivia",Erbol (720p)
@@ -6450,10 +6454,6 @@ https://liveingesta118.cdnmedia.tv/trecetvlive/smil:rtmp01.smil/playlist.m3u8
 http://45.170.130.224:8000/play/a050/index.m3u8?hls
 #EXTINF:-1 tvg-id="Trivu.pe@SD" tvg-logo="https://i.imgur.com/QrUYjOS.png" group-title="Peru",Trivu (1080p)
 http://190.93.224.42/TRIVU-TV/index.m3u8
-#EXTINF:-1 tvg-id="TropicalMoonCumbiaTV.pa@SD" tvg-logo="https://i.imgur.com/jL1kLyS.png" group-title="Panama",Tropical Moon Cumbia TV (720p)
-https://srv2.tropicalmoonmedia.com/cumbiatv/cumbiatv/playlist.m3u8
-#EXTINF:-1 tvg-id="TropicalMoonEventosTV.pa@SD" tvg-logo="https://i.imgur.com/RklPmml.png" group-title="Panama",Tropical Moon Eventos TV (720p)
-https://srv2.tropicalmoonmedia.com/eventostv/eventostv/playlist.m3u8
 #EXTINF:-1 tvg-id="TRT.ve@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Canal_trt_logo.PNG" group-title="Venezuela",TRT (410p) [Not 24/7]
 https://vcp12.myplaytv.com/trt/trt/playlist.m3u8
 #EXTINF:-1 tvg-id="TRTWorld.tr@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/TRT_World.svg/960px-TRT_World.svg.png" group-title="Turkiye",TRT World (1080p) [Not 24/7]
