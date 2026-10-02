@@ -79,14 +79,22 @@ jobs:
           def base_id(line):
             x=tvg_id(line);return x.split('@',1)[0] if x else None
           def broad_category(cid,line):
-            cats=(meta.get(cid) or {}).get('categories') or [];s=' '.join(str(x).lower() for x in cats)+' '+line.split(',',1)[-1].lower()
+            cats=(meta.get(cid) or {}).get('categories') or []
+            s=' '.join(str(x).lower() for x in cats)+' '+line.split(',',1)[-1].lower()
             if any(x in s for x in ['news','weather']):return 'News & Weather'
-            if any(x in s for x in ['kids','children','animation','cartoon']):return 'Kids'
+            if any(x in s for x in ['sport','football','soccer','baseball','basketball','hockey','golf','tennis','racing','motorsport','wrestling']):return 'Sports'
+            if any(x in s for x in ['food','cooking','cook','recipe','culinary','kitchen']):return 'Food & Cooking'
+            if any(x in s for x in ['travel','destination','vacation','adventure']):return 'Travel & Adventure'
+            if any(x in s for x in ['kids','children','animation','cartoon','family']):return 'Kids & Family'
             if any(x in s for x in ['movie','movies','cinema','film']):return 'Movies'
-            if any(x in s for x in ['series','entertainment','comedy','drama']):return 'Series & Entertainment'
-            if any(x in s for x in ['sport','football','soccer','baseball','basketball']):return 'Sports'
-            if 'music' in s:return 'Music'
-            if any(x in s for x in ['documentary','science','education','culture']):return 'Documentary & Culture'
+            if any(x in s for x in ['comedy','funny','stand-up','standup','sitcom']):return 'Comedy'
+            if any(x in s for x in ['series','drama','entertainment','soap','telenovela']):return 'Series & Entertainment'
+            if any(x in s for x in ['music','concert']):return 'Music'
+            if any(x in s for x in ['documentary','science','education','culture','history','nature']):return 'Documentary & Culture'
+            if any(x in s for x in ['lifestyle','home','garden','diy','fashion','health','fitness']):return 'Lifestyle'
+            if any(x in s for x in ['religion','religious','christian','faith','church']):return 'Faith'
+            if any(x in s for x in ['business','finance','financial','market']):return 'Business'
+            if any(x in s for x in ['crime','court','true crime']):return 'Crime & Court'
             return 'General'
           def is_spanish_us(cid,line):
             m=meta.get(cid) or {};langs=[str(x).lower() for x in (m.get('languages') or [])];text=(cid or '').lower()+' '+line.lower()
