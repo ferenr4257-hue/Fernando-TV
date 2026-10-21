@@ -149,10 +149,12 @@ https://list.iptvcat.com/my_list/s/18749fccdbea924ceb8ccca7253218d0.m3u8
 https://alba-cr-repretel-c6.stream.mediatiquestream.com/index.m3u8
 #EXTINF:-1 tvg-id="Canal11.cr" group-title="Costa Rica",Repretel Canal 11 - Alternative
 https://alba-cr-repretel-c11.stream.mediatiquestream.com/index.m3u8
-#EXTINF:-1 tvg-id="AgrotendenciaTV.cr@SD" tvg-logo="https://i.imgur.com/frd60hR.png" group-title="Costa Rica",Agrotendencia TV (1080p)
-https://5fc584f3f19c9.streamlock.net/agrotendencia/videoagrotendencia_hls1/playlist.m3u8
-#EXTINF:-1 tvg-id="Enlace.cr@SD" tvg-logo="https://i.imgur.com/YwUVTmS.png" group-title="Costa Rica",Enlace (1080p)
-http://138.121.15.230:9002/ENLACE/index.m3u8
+#EXTINF:-1 tvg-id="Teletica.cr" group-title="Costa Rica2",Teletica 7 - CXTv Test
+https://www.cxtvlive.com/live-tv/teletica
+#EXTINF:-1 tvg-id="Repretel6.cr" group-title="Costa Rica2",Repretel Canal 6 - CXTv Test
+https://www.cxtvlive.com/live-tv/tv-repretel-6
+#EXTINF:-1 tvg-id="Repretel2.cr" group-title="Costa Rica2",Repretel Canal 2 - CXTv Test
+https://www.cxtvlive.com/live-tv/tv-repretel-2
 #EXTINF:-1 tvg-id="Canal6.ni@SD" tvg-logo="https://i.imgur.com/6BWAZdq.png" group-title="Nicaragua",Canal 6 (Nicaragua) (480p) [Not 24/7]
 http://138.117.4.70:8075/Canal06_CooTel/playlist.m3u8
 #EXTINF:-1 tvg-id="Canal7Boaco.ni@SD" tvg-logo="https://i.imgur.com/chXNX9k.jpeg" group-title="Nicaragua",Canal 7 Boaco (1080p) [Not 24/7]
@@ -183,27 +185,6 @@ https://cdn.amixtv.com/vivatv/index.m3u8
 http://ott.streann.com:8080/loadbalancer/services/public/channels/59e60c4997381ef50d15c041/playlist.m3u8
 #EXTINF:-1 tvg-id="WTVCanal20.ni@SD" tvg-logo="https://i.imgur.com/nb81xeU.png" group-title="Nicaragua",WTV Canal 20 (1080p)
 https://cootv.cootel.com.ni:8095/Canal40_WTV/playlist.m3u8
-# NICARAGUA SCRIBD TEST STREAMS
-#EXTINF:-1 group-title="Nicaragua",Canal 2 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-2/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 4 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-4/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 6 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-6/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 8 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-8/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 9 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-9/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 10 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-10/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 11 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-11/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 12 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-12/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 13 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-13/playlist.m3u8
-#EXTINF:-1 group-title="Nicaragua",Canal 23 Nicaragua - Test
-http://138.117.4.70:8079/streams/d/Canal-23/playlist.m3u8
 #EXTINF:-1 tvg-id="ARCanal.pa@SD" tvg-logo="https://i.imgur.com/ejRJqSI.png" group-title="Panama",A&R Canal (720p)
 http://51.222.9.192:3589/stream/play.m3u8
 #EXTINF:-1 tvg-id="AXNLatinAmerica.us@CentralAmerica" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png" group-title="Panama",AXN Latin America (1080p)
@@ -260,12 +241,6 @@ https://bcovlive-a.akamaihd.net/628aecb4fccb4c52b4f9c8d5cc57fb73/us-west-2/60580
 http://15.204.246.24:8080/UniversalHD/index.m3u8
 #EXTINF:-1 tvg-id="VisionLatina.pa@SD" tvg-logo="https://i.imgur.com/TG30lWA.jpg" group-title="Panama",Vision Latina (1080p)
 https://cdn-cloudfront.us-east-1.prod.ingest.aws-infra.dacast.com/live/64917431-2f51-0a46-d4d0-04d111b2393f/master.m3u8
-#EXTINF:-1 tvg-id="TropicalMoonCumbiaTV.pa@SD" tvg-logo="https://i.imgur.com/jL1kLyS.png" group-title="Panama",Tropical Moon Cumbia TV (720p)
-https://srv2.tropicalmoonmedia.com/cumbiatv/cumbiatv/playlist.m3u8
-#EXTINF:-1 tvg-id="TropicalMoonEventosTV.pa@SD" tvg-logo="https://i.imgur.com/RklPmml.png" group-title="Panama",Tropical Moon Eventos TV (720p)
-https://srv2.tropicalmoonmedia.com/eventostv/eventostv/playlist.m3u8
-#EXTINF:-1 tvg-id="TropicalMoonUrbanTV.pa@SD" tvg-logo="https://i.imgur.com/WcM7BP5.png" group-title="Panama",Tropical Moon Urban TV [Not 24/7]
-https://sistemastr.tropicalmoonmedia.com:443/live/D8E123ACA054EF85B153C354A481A406/4.m3u8
 #EXTINF:-1 tvg-id="AmigosTVChiquimula.gt@SD" tvg-logo="https://i.ibb.co/tLhcNTD/amigos-tv-chiquimula.png" group-title="Guatemala",Amigos TV Chiquimula (480p)
 https://antmedia.cablevisionrobles.com:5443/LiveApp/streams/CqwAgRagMvBNYN8c1731608980342.m3u8
 #EXTINF:-1 tvg-id="AuroraMediaFilms.gt@SD" tvg-logo="https://i.imgur.com/DVC5w6H.png" group-title="Guatemala",Aurora Media Films (720p)
@@ -642,12 +617,6 @@ https://media.streambrothers.com:19360/8308/8308.m3u8
 https://live20.bozztv.com/akamaissh101/ssh101/fsradiotv/playlist.m3u8
 #EXTINF:-1 tvg-id="GuadalupeMedia.bz@SD" tvg-logo="https://i.imgur.com/EfaOwRE.png" group-title="Belize",Guadalupe Media (720p)
 https://streamer1.nexgen.bz/GUADALUPE_MEDIA/index.m3u8
-#EXTINF:-1 tvg-id="Teletica.cr" group-title="Costa Rica2",Teletica 7 - CXTv Test
-https://www.cxtvlive.com/live-tv/teletica
-#EXTINF:-1 tvg-id="Repretel6.cr" group-title="Costa Rica2",Repretel Canal 6 - CXTv Test
-https://www.cxtvlive.com/live-tv/tv-repretel-6
-#EXTINF:-1 tvg-id="Repretel2.cr" group-title="Costa Rica2",Repretel Canal 2 - CXTv Test
-https://www.cxtvlive.com/live-tv/tv-repretel-2
 #EXTINF:-1 tvg-id="00sReplay.us@SD" tvg-logo="https://images.pluto.tv/channels/62ba60f059624e000781c436/colorLogoPNG.png" group-title="USA - Movies",00s Replay
 https://jmp2.uk/plu-62ba60f059624e000781c436.m3u8
 #EXTINF:-1 tvg-id="3ABNEnglish.us@SD" tvg-logo="https://i.imgur.com/16DMxP4.png" group-title="USA - Faith",3ABN English
@@ -906,6 +875,8 @@ https://jmp2.uk/plu-5e1f7da4bc7d740009831259.m3u8
 http://23.237.104.106:8080/USA_AMERICAN_HEROES/index.m3u8
 #EXTINF:-1 tvg-id="AmericanHorrors.us@SD" tvg-logo="https://image.roku.com/developer_channels/prod/16f5571a82819e8992a748c70b256cbe63105f4b546b73d129668dc2cb701d91.png" group-title="USA - Movies",American Horrors (480p)
 http://107.167.7.162:8081/playlist/amhor/playlist.m3u8
+#EXTINF:-1 tvg-id="AmericanNinjaWarrior.us@SD" tvg-logo="https://raw.githubusercontent.com/RoqueDJ/iptv-svg/main/1792421696158.png" group-title="USA - Sports",American Ninja Warrior (1080p)
+https://d4whmvwm0rdvi.cloudfront.net/10007/99951318/hls/master.m3u8?ads.xumo_channelId=99951318&ads.asnw=169843&ads.afid=405342864&ads.sfid=19647852&ads.csid=xumo_web_NBCUAmericanNinjaWarrior_ssai_cro&ads._fw_is_lat=0&ads._fw_us_privacy=&ads._fw_coppa=0&ads._fw_did=a5090924-15b1-4b7f-b6cd-2f06e2ba51e1&ads._fw_vcid2=512116:a5090924-15b1-4b7f-b6cd-2f06e2ba51e1&ads._fw_app_bundle=web.xumo.com&ads._fw_app_store_url=&ads._fw_content_category=&ads._fw_content_genre=&ads._fw_content_language=en&ads._fw_content_rating=&ads._fw_deviceMake=GitHubAction&ads._fw_device_model=PythonScript&ads._fw_deviceType=3-Connected_TV&ads.appVersion=1.0.0&ads.appName=XumoPlay&ads.xumo_contentId=4063&ads.xumo_contentName=NBCUAmericanNinjaWarrior&ads.xumo_providerId=4063&ads.xumo_providerName=NBCUAmericanNinjaWarrior&ads.channelId=99951318
 #EXTINF:-1 tvg-id="Ameritrade.us@SD" tvg-logo="https://images-na.ssl-images-amazon.com/images/I/71CZKwin9mL.png" group-title="USA - Business",Ameritrade (1080p) [Not 24/7]
 https://tdameritrade-vizio.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="AMGTV.us@SD" tvg-logo="https://i.imgur.com/m5Anun9.png" group-title="USA - Kids & Family",AMG TV (1080p)
@@ -1110,6 +1081,10 @@ https://bonappetit-samsung.amagi.tv/playlist.m3u8
 https://jmp2.uk/plu-68e9913c4a666b9054849832.m3u8
 #EXTINF:-1 tvg-id="Boomerang.us@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Boomerang_2014_logo.svg/960px-Boomerang_2014_logo.svg.png" group-title="USA - Kids & Family",Boomerang (720p)
 http://23.237.104.106:8080/USA_BOOMERANG/index.m3u8
+#EXTINF:-1 tvg-id="BotflixRadioo.us@HD" tvg-logo="https://botflix.tv/assets/img/botflix-mark.90c6a6f9a4.webp" group-title="USA - Music",Botflix Radioo (1080p)
+https://hls.botflix.tv/radioo/index.m3u8
+#EXTINF:-1 tvg-id="BotflixTV.us@HD" tvg-logo="https://botflix.tv/assets/img/botflix-mark.90c6a6f9a4.webp" group-title="USA - Kids & Family",Botflix TV (1080p)
+https://hls.botflix.tv/tv/index.m3u8
 #EXTINF:-1 tvg-id="Bounce.us@SD" tvg-logo="https://m.media-amazon.com/images/I/718bHckb8eL.png" group-title="USA - General",Bounce (720p)
 http://23.237.104.106:8080/USA_BOUNCE/index.m3u8
 #EXTINF:-1 tvg-id="BounceXL.us@SD" tvg-logo="https://i.imgur.com/GzxgSkc.png" group-title="USA - Series & Entertainment",Bounce XL (1080p)
@@ -1671,8 +1646,6 @@ http://23.237.104.106:8080/USA_FOOD_NETWORK/index.m3u8
 https://jmp2.uk/plu-62e92392a3e6270007f562e8.m3u8
 #EXTINF:-1 tvg-id="ForeverKids.us@SD" tvg-logo="https://i.imgur.com/deeQqYZ.png" group-title="USA - Kids & Family",Forever Kids
 https://jmp2.uk/plu-56171fafada51f8004c4b40f.m3u8
-#EXTINF:-1 tvg-id="Fox.us@East" tvg-logo="https://imgx.fubo.tv/station_logos/fox_c.png" group-title="USA - General",Fox (United States) (720p)
-http://stream.cammonitorplus.net/1752/index.m3u8
 #EXTINF:-1 tvg-id="Fox.us@KBSI" tvg-logo="https://static.wikia.nocookie.net/tvstations/images/8/8e/KBSIO6.png" group-title="USA - General",Fox (United States) KBSI (720p) [Not 24/7]
 https://live.field59.com/kbsi/kbsi1/playlist.m3u8
 #EXTINF:-1 tvg-id="Fox.us@KCPQ" tvg-logo="https://imgx.fubo.tv/station_logos/fox_c.png" group-title="USA - General",Fox (United States) KCPQ (720p)
@@ -2720,15 +2693,15 @@ https://jmp2.uk/plu-5cf96c0222df39f1a338d163.m3u8
 https://jmp2.uk/plu-5adf96e3e738977e2c31cb04.m3u8
 #EXTINF:-1 tvg-id="PlutoTVReaction.us@SD" tvg-logo="https://i.imgur.com/H9k3OXN.png" group-title="USA - Movies",Pluto TV Reaction
 https://jmp2.uk/plu-617b37b361e0fd0008cfd8c5.m3u8
-#EXTINF:-1 tvg-id="PlutoTVReality.us@US" tvg-logo="https://images.pluto.tv/channels/67922858b83355184c699699/colorLogoPNG.png" group-title="USA - Series & Entertainment",Pluto TV Reality (United States)
+#EXTINF:-1 tvg-id="PlutoTVReality.us@US" tvg-logo="https://images.pluto.tv/channels/67922858b83355184c699699/colorLogoPNG.png" group-title="USA - Series & Entertainment",Pluto TV Reality
 https://jmp2.uk/plu-69fa3faab9c0f0d444e64de3.m3u8
-#EXTINF:-1 tvg-id="PlutoTVRomance.us@US" tvg-logo="https://i.imgur.com/GJBxfyf.png" group-title="USA - Movies",Pluto TV Romance (United States)
+#EXTINF:-1 tvg-id="PlutoTVRomance.us@US" tvg-logo="https://i.imgur.com/GJBxfyf.png" group-title="USA - Movies",Pluto TV Romance
 https://jmp2.uk/plu-5a66795ef91fef2c7031c599.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSanctuary.us@SD" tvg-logo="https://i.imgur.com/Fu2jn2t.png" group-title="USA - Series & Entertainment",Pluto TV Sanctuary
 https://jmp2.uk/plu-63eb57d6c111bc0008fe2658.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSciFi.us@US" tvg-logo="https://images.pluto.tv/channels/66166cb1307fa30008f275e7/colorLogoPNG.png" group-title="USA - Movies",Pluto TV Sci-Fi (United States)
 https://jmp2.uk/plu-5b4fc274694c027be6ed3eea.m3u8
-#EXTINF:-1 tvg-id="PlutoTVScience.us@US" tvg-logo="https://i.imgur.com/uhunRoU.png" group-title="USA - Documentary & Culture",Pluto TV Science (United States)
+#EXTINF:-1 tvg-id="PlutoTVScience.us@US" tvg-logo="https://i.imgur.com/uhunRoU.png" group-title="USA - Documentary & Culture",Pluto TV Science
 https://jmp2.uk/plu-563a970aa1a1f7fe7c9daad7.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSpotlight.us@SD" tvg-logo="https://i.imgur.com/UmuJkVB.png" group-title="USA - Movies",Pluto TV Spotlight
 https://jmp2.uk/plu-5ba3fb9c4b078e0f37ad34e8.m3u8
@@ -2740,7 +2713,7 @@ https://jmp2.uk/plu-6887aaf4e3703b7d42b71a1e.m3u8
 https://jmp2.uk/plu-5c6dc88fcd232425a6e0f06e.m3u8
 #EXTINF:-1 tvg-id="PlutoTVTheTwilightZone.us@SD" tvg-logo="https://i.imgur.com/FiIRQAR.png" group-title="USA - Series & Entertainment",Pluto TV The Twilight Zone
 https://jmp2.uk/plu-67352ed93a61d4000881f9fa.m3u8
-#EXTINF:-1 tvg-id="PlutoTVThrillers.us@US" tvg-logo="https://i.imgur.com/ULKvDN7.png" group-title="USA - Movies",Pluto TV Thrillers (United States)
+#EXTINF:-1 tvg-id="PlutoTVThrillers.us@US" tvg-logo="https://i.imgur.com/ULKvDN7.png" group-title="USA - Movies",Pluto TV Thrillers
 https://jmp2.uk/plu-5b4e69e08291147bd04a9fd7.m3u8
 #EXTINF:-1 tvg-id="PlutoTVTrendingNow.us@SD" tvg-logo="https://images.pluto.tv/channels/673247127d5da5000817b4d6/colorLogoPNG_1732662634386.png" group-title="USA - Movies",Pluto TV Trending Now
 https://jmp2.uk/plu-673247127d5da5000817b4d6.m3u8
@@ -4057,6 +4030,8 @@ http://45.162.230.234:1935/agrobrasiltv/agrobrasiltv/playlist.m3u8
 http://45.162.64.114/AGRO_CANAL/index.m3u8
 #EXTINF:-1 tvg-id="AgroMais.br@SD" tvg-logo="https://i.imgur.com/sFcOZeo.png" group-title="Brazil",AgroMais (720p)
 http://45.162.64.114/AGROMAIS/index.m3u8
+#EXTINF:-1 tvg-id="AgrotendenciaTV.cr@SD" tvg-logo="https://i.imgur.com/frd60hR.png" group-title="Costa Rica",Agrotendencia TV (1080p)
+https://5fc584f3f19c9.streamlock.net/agrotendencia/videoagrotendencia_hls1/playlist.m3u8
 #EXTINF:-1 tvg-id="AguacateTV.ve@SD" tvg-logo="https://i.ibb.co/wpWBsgf/IMG-20230705-154622.jpg" group-title="Venezuela",Aguacate TV (1080p)
 https://streamtv.intervenhosting.net:3040/hybrid/play.m3u8
 #EXTINF:-1 tvg-id="AiredeSantaFe.ar@SD" tvg-logo="https://i.imgur.com/60vSWW0.png" group-title="Argentina",Aire de Santa Fe (1080p)
@@ -4970,6 +4945,8 @@ https://cl-2.backend.energeek.cl/bkp/egfan/mobile/index.m3u8?token=IPTVgh26
 https://cl-2.backend.energeek.cl/bkp/egradio/mobile/index.m3u8?token=IPTVgh26
 #EXTINF:-1 tvg-id="EnfoqueDigitalTV.cl@SD" tvg-logo="https://i.imgur.com/GaJzjt5.png" group-title="Chile",Enfoque Digital TV
 https://5eaccbab48461.streamlock.net:1936/8074/8074/playlist.m3u8
+#EXTINF:-1 tvg-id="Enlace.cr@SD" tvg-logo="https://i.imgur.com/YwUVTmS.png" group-title="Costa Rica",Enlace (1080p)
+http://138.121.15.230:9002/ENLACE/index.m3u8
 #EXTINF:-1 tvg-id="EPATV.cl@SD" tvg-logo="https://cdn.m3u.cl/logo/1649_EPA__TV.png" group-title="Chile",EPA! TV (720p)
 https://live-evg10.tv360.bitel.com.pe/bitel/epatv/playlist.m3u8
 #EXTINF:-1 tvg-id="ESPN2LatinAmerica.us@South" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="United States",ESPN 2 Latin America (1080p)
@@ -5889,7 +5866,7 @@ https://jmp2.uk/plu-633ee9ba83c08f00076b60a6.m3u8
 https://jmp2.uk/plu-5f1214a637c6fd00079c652f.m3u8
 #EXTINF:-1 tvg-id="PlutoTVKids.us@LatAm" tvg-logo="https://images.pluto.tv/channels/5f1214a637c6fd00079c652f/colorLogoPNG.png" group-title="United States",Pluto TV Kids LatAm
 https://jmp2.uk/plu-5dd6dae8ce788b0009eaf77b.m3u8
-#EXTINF:-1 tvg-id="PlutoTVKidsClub.us@BR" tvg-logo="https://images.pluto.tv/channels/66c8cae7fed35b0008580ec0/colorLogoPNG.png" group-title="United States",Pluto TV Kids Club (United States)
+#EXTINF:-1 tvg-id="PlutoTVKidsClub.us@BR" tvg-logo="https://images.pluto.tv/channels/66c8cae7fed35b0008580ec0/colorLogoPNG.png" group-title="United States",Pluto TV Kids Club
 https://jmp2.uk/plu-66c8cae7fed35b0008580ec0.m3u8
 #EXTINF:-1 tvg-id="PlutoTVMiObsesionFavorita.us@LatAm" tvg-logo="https://images.pluto.tv/channels/6109ab25b84d6a0007504886/colorLogoPNG.png" group-title="United States",Pluto TV Mi Obsesion Favorita
 https://jmp2.uk/plu-6109ab25b84d6a0007504886.m3u8
@@ -5925,7 +5902,7 @@ https://jmp2.uk/plu-604a8dedbca75b0007b1c753.m3u8
 https://jmp2.uk/plu-5e98b0447665f200078caded.m3u8
 #EXTINF:-1 tvg-id="PlutoTVPolicial.us@BR" tvg-logo="https://images.pluto.tv/channels/678fdf9e3de7c8cf948e8824/colorLogoPNG.png" group-title="United States",Pluto TV Policial
 https://jmp2.uk/plu-678fdf9e3de7c8cf948e8824.m3u8
-#EXTINF:-1 tvg-id="PlutoTVReality.us@LatAm" tvg-logo="https://images.pluto.tv/channels/67922858b83355184c699699/colorLogoPNG.png" group-title="United States",Pluto TV Reality (United States) LatAm
+#EXTINF:-1 tvg-id="PlutoTVReality.us@LatAm" tvg-logo="https://images.pluto.tv/channels/67922858b83355184c699699/colorLogoPNG.png" group-title="United States",Pluto TV Reality LatAm
 https://jmp2.uk/plu-5dcde197f6591d0009839e04.m3u8
 #EXTINF:-1 tvg-id="PlutoTVRecordNews.us@BR" tvg-logo="https://images.pluto.tv/channels/6102e04e9ab1db0007a980a1/colorLogoPNG.png" group-title="United States",Pluto TV Record News (720p)
 https://jmp2.uk/plu-6102e04e9ab1db0007a980a1.m3u8
@@ -5933,7 +5910,7 @@ https://jmp2.uk/plu-6102e04e9ab1db0007a980a1.m3u8
 https://jmp2.uk/plu-5f1212ad1728050007a523b8.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSciFi.us@LatAm" tvg-logo="https://images.pluto.tv/channels/66166cb1307fa30008f275e7/colorLogoPNG.png" group-title="United States",Pluto TV Sci-Fi (United States) LatAm
 https://jmp2.uk/plu-5f2817d3d7573a00080f9175.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSeries.us@LatAm" tvg-logo="https://images.pluto.tv/channels/5dcde1317578340009b751d0/colorLogoPNG.png" group-title="United States",Pluto TV Series (United States)
+#EXTINF:-1 tvg-id="PlutoTVSeries.us@LatAm" tvg-logo="https://images.pluto.tv/channels/5dcde1317578340009b751d0/colorLogoPNG.png" group-title="United States",Pluto TV Series
 https://jmp2.uk/plu-5dcde1317578340009b751d0.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSeriesAcao.us@BR" tvg-logo="https://images.pluto.tv/channels/6474ab1da51cb80008bfb5f4/colorLogoPNG.png" group-title="United States",Pluto TV Series Acao
 https://jmp2.uk/plu-6474ab1da51cb80008bfb5f4.m3u8
@@ -5961,7 +5938,7 @@ https://jmp2.uk/plu-5dd837642c6e9300098ad484.m3u8
 https://jmp2.uk/plu-691627e4a29a6123e400b3e0.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSeriesRetro.us@LatAm" tvg-logo="https://images.pluto.tv/channels/5de802659167b10009e7deba/colorLogoPNG.png" group-title="United States",Pluto TV Series Retro
 https://jmp2.uk/plu-5de802659167b10009e7deba.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSeriesSciFi.us@BR" tvg-logo="https://images.pluto.tv/channels/63d2ba2f60bc8f0008981a0e/colorLogoPNG.png" group-title="United States",Pluto TV Series Sci-Fi (United States)
+#EXTINF:-1 tvg-id="PlutoTVSeriesSciFi.us@BR" tvg-logo="https://images.pluto.tv/channels/63d2ba2f60bc8f0008981a0e/colorLogoPNG.png" group-title="United States",Pluto TV Series Sci-Fi
 https://jmp2.uk/plu-63d2ba2f60bc8f0008981a0e.m3u8
 #EXTINF:-1 tvg-id="PlutoTVShowsporStingray.us@BR" tvg-logo="https://images.pluto.tv/channels/604b91e0692f770007d9f33f/colorLogoPNG.png" group-title="United States",Pluto TV Shows por Stingray (720p)
 https://jmp2.uk/plu-604b91e0692f770007d9f33f.m3u8
@@ -6724,6 +6701,12 @@ http://190.60.46.228:8888/play/a030/index.m3u8
 http://45.170.130.224:8000/play/a050/index.m3u8?hls
 #EXTINF:-1 tvg-id="Trivu.pe@SD" tvg-logo="https://i.imgur.com/QrUYjOS.png" group-title="Peru",Trivu (1080p)
 http://190.93.224.42/TRIVU-TV/index.m3u8
+#EXTINF:-1 tvg-id="TropicalMoonCumbiaTV.pa@SD" tvg-logo="https://i.imgur.com/jL1kLyS.png" group-title="Panama",Tropical Moon Cumbia TV (720p)
+https://srv2.tropicalmoonmedia.com/cumbiatv/cumbiatv/playlist.m3u8
+#EXTINF:-1 tvg-id="TropicalMoonEventosTV.pa@SD" tvg-logo="https://i.imgur.com/RklPmml.png" group-title="Panama",Tropical Moon Eventos TV (720p)
+https://srv2.tropicalmoonmedia.com/eventostv/eventostv/playlist.m3u8
+#EXTINF:-1 tvg-id="TropicalMoonUrbanTV.pa@SD" tvg-logo="https://i.imgur.com/WcM7BP5.png" group-title="Panama",Tropical Moon Urban TV [Not 24/7]
+https://sistemastr.tropicalmoonmedia.com:443/live/D8E123ACA054EF85B153C354A481A406/4.m3u8
 #EXTINF:-1 tvg-id="TRT.ve@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/67/Canal_trt_logo.PNG" group-title="Venezuela",TRT (Venezuela) (410p) [Not 24/7]
 https://vcp12.myplaytv.com/trt/trt/playlist.m3u8
 #EXTINF:-1 tvg-id="TRTWorld.tr@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/TRT_World.svg/960px-TRT_World.svg.png" group-title="Turkiye",TRT World (720p)
@@ -7711,28 +7694,14 @@ https://jmp2.uk/plu-609e7e423e9173000706a681.m3u8
 https://jmp2.uk/plu-64be745340962900080b55e7.m3u8
 #EXTINF:-1 tvg-id="PlutoTVMotor.de@ES" tvg-logo="https://images.pluto.tv/channels/6080345ebb49b90007ce0baf/colorLogoPNG.png" group-title="Spain",Pluto TV Motor (Germany)
 https://jmp2.uk/plu-6080345ebb49b90007ce0baf.m3u8
-#EXTINF:-1 tvg-id="PlutoTVParanormal.de@ES" tvg-logo="https://images.pluto.tv/channels/5f98487036af340008da1e37/colorLogoPNG.png" group-title="Spain",Pluto TV Paranormal (Germany) ES
-https://jmp2.uk/plu-612ce5214bb5790007ad3016.m3u8
 #EXTINF:-1 tvg-id="PlutoTVPsycho.de@ES" tvg-logo="https://images.pluto.tv/channels/65ce480a78df2200131c597b/colorLogoPNG.png" group-title="Spain",Pluto TV Psycho
 https://jmp2.uk/plu-65ce480a78df2200131c597b.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSciFi.de@ES" tvg-logo="https://images.pluto.tv/channels/60ed498c4248a400077c0b9d/colorLogoPNG.png" group-title="Spain",Pluto TV Sci-Fi (Germany) ES
-https://jmp2.uk/plu-5f6a38eaa5b68b0007a00e7a.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSeries.de@ES" tvg-logo="https://images.pluto.tv/channels/5f1ac8f49205650007bc15f1/colorLogoPNG.png" group-title="Spain",Pluto TV Series (Germany)
-https://jmp2.uk/plu-5f1ac8f49205650007bc15f1.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSeriescriminales.de@ES" tvg-logo="https://images.pluto.tv/channels/65cf6ab58145cb0008129ca8/colorLogoPNG.png" group-title="Spain",Pluto TV Series criminales
 https://jmp2.uk/plu-65cf6ab58145cb0008129ca8.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSeriesSciFi.de@ES" tvg-logo="https://images.pluto.tv/channels/65ddec1ef7f0af0008be4b65/colorLogoPNG.png" group-title="Spain",Pluto TV Series Sci-Fi (Germany)
-https://jmp2.uk/plu-65ddec1ef7f0af0008be4b65.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSnooker900.de@ES" tvg-logo="https://images.pluto.tv/channels/68ac5543a1ac0c90f2c8943e/colorLogoPNG_1760517341343.png" group-title="Spain",Pluto TV Snooker 900 (Germany) ES (720p)
-https://jmp2.uk/plu-69148c470155f9b136b5d856.m3u8
 #EXTINF:-1 tvg-id="PlutoTVTeen.de@ES" tvg-logo="https://images.pluto.tv/channels/63eb944dc111bc0008fe7021/colorLogoPNG_1761820520562.png" group-title="Spain",Pluto TV Teen (720p)
 https://jmp2.uk/plu-63eb944dc111bc0008fe7021.m3u8
 #EXTINF:-1 tvg-id="PlutoTVTelenovelasClasicas.de@ES" tvg-logo="https://images.pluto.tv/channels/662a69daa0a74e00087a1c72/colorLogoPNG.png" group-title="Spain",Pluto TV Telenovelas Clasicas
 https://jmp2.uk/plu-662a69daa0a74e00087a1c72.m3u8
-#EXTINF:-1 tvg-id="PlutoTVThrillers.de@ES" tvg-logo="https://images.pluto.tv/channels/5f1ac8a87cd38d000745d7cf/colorLogoPNG.png" group-title="Spain",Pluto TV Thrillers (Germany)
-https://jmp2.uk/plu-5f1ac8a87cd38d000745d7cf.m3u8
-#EXTINF:-1 tvg-id="PlutoTVTrueCrime.de@ES" tvg-logo="https://images.pluto.tv/channels/615333098185f00008715a56/colorLogoPNG.png" group-title="Spain",Pluto TV True Crime (Germany) ES
-https://jmp2.uk/plu-64a3f200f238ce0008d47247.m3u8
 #EXTINF:-1 tvg-id="PlutoTVWestern.de@ES" tvg-logo="https://images.pluto.tv/channels/630dd3b2605f140007e002f5/colorLogoPNG_1732030684562.png" group-title="Spain",Pluto TV Western ES
 https://jmp2.uk/plu-6385e82900ab2e000768a058.m3u8
 #EXTINF:-1 tvg-id="PlutoTVZombies.de@ES" tvg-logo="https://images.pluto.tv/channels/65786888b228b7000843ad9a/colorLogoPNG.png" group-title="Spain",Pluto TV Zombies
@@ -8250,14 +8219,10 @@ https://jmp2.uk/plu-6911c9704316999535eb21cf.m3u8
 https://jmp2.uk/plu-6911c92b4316999535eb1e08.m3u8
 #EXTINF:-1 tvg-id="PlutoTVNottidiTerrore.de@IT" tvg-logo="https://images.pluto.tv/channels/6911c8dd8caba6f046c5c5d5/colorLogoPNG_1766041208757.png" group-title="Italy",Pluto TV Notti di Terrore
 https://jmp2.uk/plu-6911c8dd8caba6f046c5c5d5.m3u8
-#EXTINF:-1 tvg-id="PlutoTVParanormal.de@IT" tvg-logo="https://images.pluto.tv/channels/5f98487036af340008da1e37/colorLogoPNG.png" group-title="Italy",Pluto TV Paranormal (Germany) IT
-https://jmp2.uk/plu-66c70033b1a34600087bb09a.m3u8
 #EXTINF:-1 tvg-id="PlutoTVRealLife.de@IT" tvg-logo="https://images.pluto.tv/channels/60801976f92a750007a0699c/colorLogoPNG_1775123848385.png" group-title="Italy",Pluto TV Real Life
 https://jmp2.uk/plu-60801976f92a750007a0699c.m3u8
 #EXTINF:-1 tvg-id="PlutoTVScherzierisate.de@IT" tvg-logo="https://images.pluto.tv/channels/609404b0a8ec810007d8de9d/colorLogoPNG.png" group-title="Italy",Pluto TV Scherzi e risate
 https://jmp2.uk/plu-609404b0a8ec810007d8de9d.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSciFi.de@IT" tvg-logo="https://images.pluto.tv/channels/60ed498c4248a400077c0b9d/colorLogoPNG.png" group-title="Italy",Pluto TV Sci-Fi (Germany) IT
-https://jmp2.uk/plu-61728bb9ee3773000840c1fa.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSerie.de@IT" tvg-logo="https://images.pluto.tv/channels/5dc190f7bfed110009d934c3/colorLogoPNG.png" group-title="Italy",Pluto TV Serie IT
 https://jmp2.uk/plu-60b9ff2722bfa400072676ef.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSerieCrime.de@IT" tvg-logo="https://images.pluto.tv/channels/608aa777b907770007e5d05d/colorLogoPNG_1750402183051.png" group-title="Italy",Pluto TV Serie Crime
@@ -8266,8 +8231,6 @@ https://jmp2.uk/plu-608aa777b907770007e5d05d.m3u8
 https://jmp2.uk/plu-67ed14aaf7c5d70b9089c3bf.m3u8
 #EXTINF:-1 tvg-id="PlutoTVShore.de@IT" tvg-logo="https://images.pluto.tv/channels/67e3b0d2443f0671bc8a1297/colorLogoPNG_1747721158520.png" group-title="Italy",Pluto TV Shore
 https://jmp2.uk/plu-67e3b0d2443f0671bc8a1297.m3u8
-#EXTINF:-1 tvg-id="PlutoTVSnooker900.de@IT" tvg-logo="https://images.pluto.tv/channels/68ac5543a1ac0c90f2c8943e/colorLogoPNG_1760517341343.png" group-title="Italy",Pluto TV Snooker 900 (Germany) IT (720p)
-https://jmp2.uk/plu-69148c76e9dec35c9269a16c.m3u8
 #EXTINF:-1 tvg-id="PlutoTVSport.de@IT" tvg-logo="https://images.pluto.tv/channels/608030eff4b6f70007e1684c/colorLogoPNG_1746816937164.png" group-title="Italy",Pluto TV Sport (Germany)
 https://jmp2.uk/plu-608030eff4b6f70007e1684c.m3u8
 #EXTINF:-1 tvg-id="PlutoTVStoria.de@IT" tvg-logo="https://images.pluto.tv/channels/65253fdf3fd33c00080214a3/colorLogoPNG_1773147329671.png" group-title="Italy",Pluto TV Storia
@@ -8276,8 +8239,6 @@ https://jmp2.uk/plu-65253fdf3fd33c00080214a3.m3u8
 https://jmp2.uk/plu-63eb573ba99571000897135b.m3u8
 #EXTINF:-1 tvg-id="PlutoTVToto.de@IT" tvg-logo="https://images.pluto.tv/channels/65253f9881f942000833ccd5/colorLogoPNG_1774617972809.png" group-title="Italy",Pluto TV Toto
 https://jmp2.uk/plu-65253f9881f942000833ccd5.m3u8
-#EXTINF:-1 tvg-id="PlutoTVTrueCrime.de@IT" tvg-logo="https://images.pluto.tv/channels/615333098185f00008715a56/colorLogoPNG.png" group-title="Italy",Pluto TV True Crime (Germany) IT
-https://jmp2.uk/plu-66d9ab4bf0f17500084e9b7e.m3u8
 #EXTINF:-1 tvg-id="PlutoTVViaggi.de@IT" tvg-logo="https://images.pluto.tv/channels/63c923944207be0007fd0887/colorLogoPNG_1774882201565.png" group-title="Italy",Pluto TV Viaggi
 https://jmp2.uk/plu-63c923944207be0007fd0887.m3u8
 #EXTINF:-1 tvg-id="PlutoTVWestern.de@IT" tvg-logo="https://images.pluto.tv/channels/630dd3b2605f140007e002f5/colorLogoPNG_1732030684562.png" group-title="Italy",Pluto TV Western IT
